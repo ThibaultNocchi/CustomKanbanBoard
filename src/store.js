@@ -1,19 +1,16 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import Task from '@/plugins/task.js'
+import TasksList from '@/plugins/taskslist.js'
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
     // board_code: null
     board_code: 'board code',
-    lists: [
-      {name: 'Pending',
-      tasks: [{
-        name: 'Tache 1',
-        desc: 'Faire ceci'
-      }]}
-    ]
+    lists: [new TasksList('Pending', [new Task('Tache 1', 'Corps 1')])]
   },
   mutations: {
     set_board_code(state, val) {
