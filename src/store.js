@@ -13,6 +13,8 @@ export default new Vuex.Store({
     }
   },
   actions: {
-
+    reset_connection(context) {
+      context.commit('set_board_code', null)
+    }
   }
 })
