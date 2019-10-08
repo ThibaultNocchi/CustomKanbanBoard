@@ -5,7 +5,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    board_code: null
+    // board_code: null
+    board_code: 'board code'
   },
   mutations: {
     set_board_code(state, val) {
