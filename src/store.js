@@ -6,7 +6,14 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     // board_code: null
-    board_code: 'board code'
+    board_code: 'board code',
+    lists: [
+      {name: 'Pending',
+      tasks: [{
+        name: 'Tache 1',
+        desc: 'Faire ceci'
+      }]}
+    ]
   },
   mutations: {
     set_board_code(state, val) {

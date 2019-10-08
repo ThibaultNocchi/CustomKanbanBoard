@@ -1,12 +1,12 @@
 <template>
   
   <v-card>
-    <v-card-title>{{title}}</v-card-title>
+    <v-card-title>{{list.name}}</v-card-title>
     <v-divider></v-divider>
     
     <v-card-text>
 
-      <task-card class="ma-1" v-for="i in 4" :key="i"></task-card>
+      <task-card class="ma-1" v-for="(task, idx) in list.tasks" :key="idx" :task="task"></task-card>
 
     </v-card-text>
 
@@ -18,22 +18,7 @@
 import TaskCard from '@/components/TaskCard.vue'
 
 export default {
-  computed: {
-    title() {
-      if (this.listType === 'pending') return 'Pending'
-      if (this.listType === 'ready') return 'Ready'
-      if (this.listType === 'ongoing') return 'Ongoing'
-      if (this.listType === 'done') return 'Done'
-      return ''
-    }
-  },
-  props: {
-    listType: {
-      type: String,
-      validator: (value) => (['pending', 'ready', 'ongoing', 'done'].indexOf(value) !== -1),
-      default: 'pending'
-    }
-  },
+  props: ['list'],
   components: {TaskCard}
 }
 </script>
