@@ -37,6 +37,12 @@
       <v-toolbar-title>Super Kanban</v-toolbar-title>
     </v-app-bar>
 
+    <v-content>
+      <v-container>
+        <slot></slot>
+      </v-container>
+    </v-content>
+
   </v-app>
 </template>
 
