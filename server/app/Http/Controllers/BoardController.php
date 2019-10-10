@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Board;
-use App\Exceptions\NoLineException;
 use Illuminate\Http\Request;
 
 class BoardController extends Controller
@@ -47,9 +46,7 @@ class BoardController extends Controller
      */
     public function show(string $code)
     {
-        $board = Board::withCode($code)->first();
-        if(!$board) throw new NoLineException('No board found.');
-        return response()->json($board);
+        return response()->json(Board::login($code));
     }
 
     // /**
