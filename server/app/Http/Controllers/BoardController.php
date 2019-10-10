@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Board;
+use App\Exceptions\NoLineException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 

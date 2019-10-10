@@ -24,14 +24,21 @@
               </v-toolbar>
 
               <v-card-text>
-                <v-form>
+                <v-form @submit="connect" onSubmit="return false" v-model="form_validity">
                   <v-text-field
                     label="Code"
                     name="board_code"
                     prepend-icon="dashboard"
                     type="text"
                     autofocus
+                    counter="6"
+                    :rules="[rules.length]"
+                    :loading="connecting"
+                    :disabled="connecting"
+                    :error-messages="errors"
+                    :success-messages="logged"
                     v-model="local_board_code"
+                    @keydown="errors = []"
                   ></v-text-field>
                 </v-form>
               </v-card-text>
@@ -41,6 +48,7 @@
                 <v-btn
                   color="primary"
                   @click="connect"
+                  :disabled="!form_validity || logged.length > 0"
                 >Connect</v-btn>
               </v-card-actions>
             </v-card>
@@ -55,20 +63,38 @@
 export default {
   data() {
     return {
-      local_board_code: null
+      local_board_code: null,
+      rules: {
+        length: value => (value !== null && value.length === 6) || 'Code must be 6 characters.'
+      },
+      connecting: false,
+      errors: [],
+      form_validity: null,
+      logged: []
     };
   },
 
   methods: {
     connect() {
-      this.$store.commit("set_board_code", this.local_board_code)
-      this.$router.push('home')
+      this.connecting = true
+      this.$store.dispatch("login", this.local_board_code).then(
+        () => {
+          this.connecting = false
+          this.errors = []
+          this.logged = ['Board found! Loading...']
+          new Promise(resolve => setTimeout(resolve, 1500)).then(() => {this.$router.push("home")})
+        },
+        () => {
+          this.connecting = false
+          this.logged = []
+          this.errors = ['Invalid code.']
+        }
+      );
     }
   },
 
-  mounted () {
-    this.$store.dispatch('reset_connection')
+  mounted() {
+    this.$store.dispatch("reset_connection");
   }
-
 };
 </script>

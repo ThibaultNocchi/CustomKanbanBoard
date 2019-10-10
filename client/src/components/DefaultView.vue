@@ -10,8 +10,8 @@
       <template v-slot:prepend>
         <v-list-item>
           <v-list-item-content>
-            <v-list-item-title>Board name</v-list-item-title>
-            <v-list-item-subtitle>{{$store.state.board_code}}</v-list-item-subtitle>
+            <v-list-item-title>{{$store.state.board.name}}</v-list-item-title>
+            <v-list-item-subtitle>{{$store.state.board.code}}</v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
       </template>
@@ -56,7 +56,7 @@ export default {
   },
 
   mounted() {
-    if (this.$store.state.board_code === null) {
+    if (this.$store.state.board.code === null) {
       this.$router.replace("/");
     }
   },

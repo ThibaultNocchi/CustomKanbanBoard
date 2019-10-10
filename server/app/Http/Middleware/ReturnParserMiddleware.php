@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use ReflectionClass;
 
 class ReturnParserMiddleware
 {
@@ -26,11 +27,13 @@ class ReturnParserMiddleware
                 if ($original) {
                     $response->setData([
                         'success' => true,
-                        'response' => $original
+                        'response' => $original,
+                        'type' => (new ReflectionClass($original))->getShortName()
                     ]);
                 } else {
                     $response->setData([
-                        'success' => true
+                        'success' => true,
+                        'type' => (new ReflectionClass($original))->getShortName()
                     ]);
                 }
             }
