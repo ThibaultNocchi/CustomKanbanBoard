@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Board;
 use App\Exceptions\NoLineException;
+use App\Exceptions\ValidationFailedException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class BoardController extends Controller
 {
@@ -37,7 +39,17 @@ class BoardController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:127'
+        ]);
+
+        if($validator->fails()){
+            throw new ValidationFailedException('', $validator->errors());
+        }
+
+        return response()->json(Board::register($request->name));
+
     }
 
     /**
