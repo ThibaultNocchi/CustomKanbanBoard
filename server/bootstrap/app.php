@@ -57,9 +57,10 @@ $app->singleton(
 |
 */
 
-// $app->middleware([
+$app->middleware([
+    App\Http\Middleware\ReturnParserMiddleware::class
 //     App\Http\Middleware\ExampleMiddleware::class
-// ]);
+]);
 
 $app->routeMiddleware([
     'auth' => App\Http\Middleware\Authenticate::class,

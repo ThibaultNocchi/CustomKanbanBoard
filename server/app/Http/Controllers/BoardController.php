@@ -3,29 +3,30 @@
 namespace App\Http\Controllers;
 
 use App\Board;
+use App\Exceptions\NoLineException;
 use Illuminate\Http\Request;
 
 class BoardController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
+    // /**
+    //  * Display a listing of the resource.
+    //  *
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function index()
+    // {
+    //     //
+    // }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+    // /**
+    //  * Show the form for creating a new resource.
+    //  *
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function create()
+    // {
+    //     //
+    // }
 
     /**
      * Store a newly created resource in storage.
@@ -41,25 +42,26 @@ class BoardController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  string  $code
      * @return \Illuminate\Http\Response
      */
-    public function show(int $id)
+    public function show(string $code)
     {
-        $board = Board::findOrFail($id);
-        return $board;
+        $board = Board::withCode($code)->first();
+        if(!$board) throw new NoLineException('No board found.');
+        return response()->json($board);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Board  $board
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Board $board)
-    {
-        //
-    }
+    // /**
+    //  * Show the form for editing the specified resource.
+    //  *
+    //  * @param  \App\Board  $board
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function edit(Board $board)
+    // {
+    //     //
+    // }
 
     /**
      * Update the specified resource in storage.
