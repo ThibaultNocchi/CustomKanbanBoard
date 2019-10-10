@@ -25,6 +25,8 @@ $app->withFacades();
 
 $app->withEloquent();
 
+$app->configure('cors');
+
 /*
 |--------------------------------------------------------------------------
 | Register Container Bindings
@@ -58,8 +60,9 @@ $app->singleton(
 */
 
 $app->middleware([
-    App\Http\Middleware\ReturnParserMiddleware::class,
-    App\Http\Middleware\CorsMiddleware::class
+    // App\Http\Middleware\CorsMiddleware::class,
+    \Barryvdh\Cors\HandleCors::class,
+    App\Http\Middleware\ReturnParserMiddleware::class
 //     App\Http\Middleware\ExampleMiddleware::class
 ]);
 
@@ -83,6 +86,7 @@ $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 
 $app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
+$app->register(Barryvdh\Cors\ServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------
