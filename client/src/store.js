@@ -31,9 +31,16 @@ export default new Vuex.Store({
 
     login(context, code) {
       return context.state.api.login(code)
-              .then(function (r) { return context.state.api.parse_response(r) })
-              .then(function (board) { context.commit('set_board', board) },
-                    function (exc) { console.log(exc); throw exc })
+        .then(function (r) { return context.state.api.parse_response(r) })
+        .then(function (board) { context.commit('set_board', board) },
+          function (exc) { console.log(exc); throw exc })
+    },
+
+    register(context, name) {
+      return context.state.api.register(name)
+        .then(function (r) { return context.state.api.parse_response(r) })
+        .then(function (board) { context.commit('set_board', board) },
+          function (exc) { console.log(exc); throw exc })
     }
 
   }
