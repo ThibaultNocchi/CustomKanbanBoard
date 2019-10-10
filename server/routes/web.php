@@ -11,3 +11,6 @@
 |
 */
 
+$router->group(['prefix' => 'board'], function () use($router) {
+    $router->get('{id}', ['uses' => 'BoardController@show']);
+});
