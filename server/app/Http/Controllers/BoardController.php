@@ -4,18 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Board;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BoardController extends Controller
 {
-    // /**
-    //  * Display a listing of the resource.
-    //  *
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function index()
-    // {
-    //     //
-    // }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        return response()->json(Auth::user());
+    }
 
     // /**
     //  * Show the form for creating a new resource.
@@ -46,7 +47,9 @@ class BoardController extends Controller
      */
     public function show(string $code)
     {
-        return response()->json(Board::login($code));
+        $board = Board::login($code);
+        if(!$board) throw new NoLineException('No board found.');
+        return response()->json($board);
     }
 
     // /**

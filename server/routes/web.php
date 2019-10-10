@@ -13,4 +13,5 @@
 
 $router->group(['prefix' => 'board'], function () use($router) {
     $router->get('{id}', ['uses' => 'BoardController@show']);
+    $router->get('', ['middleware' => 'auth', 'uses' => 'BoardController@index']);
 });
