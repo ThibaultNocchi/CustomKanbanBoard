@@ -6,21 +6,23 @@ class API {
 
     parse_response(response) {
         return response.json()
-            .then(function (json) {
+            .then(json => {
 
                 if (json.success) {
-
-                    if (json.type === 'Board') {
-                        let board = new Board()
-                        board.response = json.response
-                        return board
-                    }
-
+                    return this.parse_single_object(json.response, json.type)
                 } else {
                     throw json.exception
                 }
 
             })
+    }
+
+    parse_single_object(o, type) {
+        if (type === 'Board') {
+            let board = new Board()
+            board.response = o
+            return board
+        }
     }
 
     login(code) {
