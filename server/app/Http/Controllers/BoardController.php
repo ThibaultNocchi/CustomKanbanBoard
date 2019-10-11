@@ -99,8 +99,4 @@ class BoardController extends Controller
         //
     }
 
-    public function users() {
-        return response()->json(Auth::user()->users()->get());
-    }
-
 }
