@@ -111,12 +111,16 @@
 export default {
   data() {
     return {
-      local_board_code: null,
+      local_board_code:
+        this.$route.params.code !== undefined ? this.$route.params.code : null,
       new_board_name: null,
       rules: {
         code_length: value =>
-          (value !== null && value.length === 6) || "Code must be 6 characters.",
-        name_length: value => (value !== null && value.length > 0 && value.length <= 127) || "Board name must have at least a character."
+          (value !== null && value.length === 6) ||
+          "Code must be 6 characters.",
+        name_length: value =>
+          (value !== null && value.length > 0 && value.length <= 127) ||
+          "Board name must have at least a character."
       },
       loading: false,
       errors: [],
@@ -129,45 +133,43 @@ export default {
   },
 
   methods: {
-
     connect() {
-      this.loading = true
+      this.loading = true;
       this.$store.dispatch("login", this.local_board_code).then(
         () => {
-          this.loading = false
-          this.errors = []
-          this.logged = ["Board found! Loading..."]
+          this.loading = false;
+          this.errors = [];
+          this.logged = ["Board found! Loading..."];
           new Promise(resolve => setTimeout(resolve, 1500)).then(() => {
-            this.$router.push("home")
-          })
+            this.$router.push({ name: "home" });
+          });
         },
         () => {
-          this.loading = false
-          this.logged = []
-          this.errors = ["Invalid code."]
+          this.loading = false;
+          this.logged = [];
+          this.errors = ["Invalid code."];
         }
       );
     },
 
     signup() {
-      this.loading = true
-      this.$store.dispatch('register', this.new_board_name).then(
+      this.loading = true;
+      this.$store.dispatch("register", this.new_board_name).then(
         () => {
-          this.loading = false
-          this.signup_errors = []
-          this.signup_success = ['Board created! Loading...']
+          this.loading = false;
+          this.signup_errors = [];
+          this.signup_success = ["Board created! Loading..."];
           new Promise(resolve => setTimeout(resolve, 1500)).then(() => {
-            this.$router.push("home")
-          })
+            this.$router.push({ name: "home" });
+          });
         },
         () => {
-          this.loading = false
-          this.signup_success = []
-          this.errors = ["Error creating board."]
+          this.loading = false;
+          this.signup_success = [];
+          this.errors = ["Error creating board."];
         }
-      )
+      );
     }
-
   },
 
   mounted() {

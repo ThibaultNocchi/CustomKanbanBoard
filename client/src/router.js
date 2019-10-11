@@ -19,6 +19,11 @@ export default new Router({
       component: function () { 
         return import('./views/Home.vue')
       }
+    },
+    {
+      path: '/login/:code',
+      name: 'login_with_code',
+      component: Login
     }
   ]
 })

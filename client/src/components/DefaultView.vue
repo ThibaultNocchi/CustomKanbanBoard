@@ -106,7 +106,7 @@ export default {
 
   methods: {
     logout() {
-      this.$router.push("/");
+      this.$router.push({name: 'login'});
     },
 
     copy_code() {
