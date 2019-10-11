@@ -25,10 +25,16 @@ class ReturnParserMiddleware
             $original = $response->getOriginalContent();
             if (!(isset($original['success']) && !$original['success'])) {
                 if ($original) {
+                    $type = (new ReflectionClass($original))->getShortName();
+                    $type2 = null;
+                    if($type === 'Collection') {
+                        if($original->count() > 0) $type2 = (new ReflectionClass($original[0]))->getShortName();
+                    }
                     $response->setData([
                         'success' => true,
                         'response' => $original,
-                        // 'type' => (new ReflectionClass($original))->getShortName()
+                        'type' => $type,
+                        'inner_type' => $type2
                     ]);
                 } else {
                     $response->setData([
