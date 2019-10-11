@@ -57,6 +57,22 @@
 
       <v-divider></v-divider>
 
+      <v-list>
+
+        <v-list-item
+          link
+          @click="copy_link"
+        >
+          <v-list-item-icon>
+            <v-icon>share</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>Share link</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+      </v-list>
+
       <template v-slot:append>
         <div class="pa-2">
           <v-btn
@@ -106,13 +122,33 @@ export default {
 
   methods: {
     logout() {
-      this.$router.push({name: 'login'});
+      this.$router.push({ name: "login" });
     },
 
     copy_code() {
-      navigator.clipboard
-        .writeText(this.$store.state.board.code)
-        .then(() => {this.snackbar_copy_success = true}, () => {this.snackbar_copy_error = true});
+      navigator.clipboard.writeText(this.$store.state.board.code).then(
+        () => {
+          this.snackbar_copy_success = true;
+        },
+        () => {
+          this.snackbar_copy_error = true;
+        }
+      );
+    },
+
+    copy_link() {
+      let link = this.$router.resolve({
+        name: "login_with_code",
+        params: { code: this.$store.state.board.code }
+      });
+      navigator.clipboard.writeText(window.location.host + link.href).then(
+        () => {
+          this.snackbar_copy_success = true;
+        },
+        () => {
+          this.snackbar_copy_error = true;
+        }
+      );
     }
   }
 };
