@@ -28,12 +28,12 @@ class ReturnParserMiddleware
                     $response->setData([
                         'success' => true,
                         'response' => $original,
-                        'type' => (new ReflectionClass($original))->getShortName()
+                        // 'type' => (new ReflectionClass($original))->getShortName()
                     ]);
                 } else {
                     $response->setData([
                         'success' => true,
-                        'type' => (new ReflectionClass($original))->getShortName()
+                        // 'type' => (new ReflectionClass($original))->getShortName()
                     ]);
                 }
             }

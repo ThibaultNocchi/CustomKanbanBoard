@@ -3,10 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use ReflectionClass;
 
 class Board extends Model
 {
     protected $hidden = ['created_at', 'updated_at', 'id'];
+    protected $appends = ['type'];
 
     public static function generateRandomString($length = 6) {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -37,6 +39,10 @@ class Board extends Model
 
     public function users() {
         return $this->hasMany('App\User');
+    }
+
+    public function getTypeAttribute(){
+        return (new ReflectionClass($this))->getShortName();
     }
 
     public function scopeWithCode($query, string $code) {
