@@ -42,7 +42,7 @@
     >
 
       <template v-slot:prepend>
-        <v-list-item>
+        <v-list-item selectable>
           <v-list-item-content>
             <v-list-item-title>{{$store.state.board.name}}</v-list-item-title>
             <v-list-item-subtitle>Code: {{$store.state.board.code}} <v-btn
@@ -57,7 +57,22 @@
 
       <v-divider></v-divider>
 
-      <v-list>
+      <v-list nav>
+
+        <v-list-item link :to="{name: 'home'}">
+          <v-list-item-icon>
+            <v-icon>home</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>Home</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+      </v-list>
+
+      <v-divider></v-divider>
+
+      <v-list nav dense>
 
         <v-list-item
           link
