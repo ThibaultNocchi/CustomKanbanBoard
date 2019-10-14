@@ -11,7 +11,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
 
   state: {
-    api: new api.API('http://super.kanban/'),
+    api: new api.API('http://super.kanban:8372/'),
 
     board: null,
     users: [],
