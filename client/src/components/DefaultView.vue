@@ -116,7 +116,7 @@ export default {
 
   mounted() {
     if (this.$store.state.board === null) {
-      this.$router.replace("/");
+      this.$router.replace({ name: "login" });
     }
   },
 

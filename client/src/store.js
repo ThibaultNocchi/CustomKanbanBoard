@@ -12,14 +12,19 @@ export default new Vuex.Store({
 
   state: {
     api: new api.API('http://super.kanban/'),
-    // board_code: 'board code',
+
     board: null,
+    users: [],
+
     lists: [new TasksList('Pending', [new Task('Tache 1', 'Corps 1')])]
   },
 
   mutations: {
     set_board(state, val) {
       state.board = val
+    },
+    set_users(state, val) {
+      state.users = val
     }
   },
 
@@ -41,6 +46,13 @@ export default new Vuex.Store({
         .then(function (r) { return context.state.api.parse_response(r) })
         .then(function (board) { context.commit('set_board', board) },
           function (exc) { console.log(exc); throw exc })
+    },
+
+    get_users(context) {
+      return context.state.api.get_users(context.state.board)
+        .then(r => (context.state.api.parse_response(r)))
+        .then(users => { context.commit('set_users', users) },
+          exc => { console.log(exc); throw exc })
     }
 
   }
