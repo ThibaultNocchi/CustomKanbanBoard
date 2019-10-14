@@ -68,6 +68,15 @@
           </v-list-item-content>
         </v-list-item>
 
+        <v-list-item link :to="{name: 'users'}">
+          <v-list-item-icon>
+            <v-icon>person</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title>Users</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
       </v-list>
 
       <v-divider></v-divider>

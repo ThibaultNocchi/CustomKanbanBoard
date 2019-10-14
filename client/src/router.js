@@ -24,6 +24,13 @@ export default new Router({
       path: '/login/:code',
       name: 'login_with_code',
       component: Login
+    },
+    {
+      path: '/users',
+      name: 'users',
+      component: function () { 
+        return import('./views/Users.vue')
+      }
     }
   ]
 })
