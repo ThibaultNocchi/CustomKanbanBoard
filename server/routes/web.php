@@ -19,4 +19,5 @@ $router->group(['prefix' => 'board'], function () use($router) {
 
 $router->group(['prefix' => 'user', 'middleware' => 'auth'], function () use($router) {
     $router->get('', ['uses' => 'UserController@index']);
+    $router->post('', ['uses' => 'UserController@store']);
 });

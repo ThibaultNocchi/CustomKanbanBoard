@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -36,7 +37,15 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:127'
+        ]);
+
+        if($validator->fails()){
+            throw new ValidationFailedException('', $validator->errors());
+        }
+
+        return response()->json(User::register(Auth::user(), $request->name));
     }
 
     /**
