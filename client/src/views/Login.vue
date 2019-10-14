@@ -135,40 +135,48 @@ export default {
   methods: {
     connect() {
       this.loading = true;
-      this.$store.dispatch("login", this.local_board_code).then(
-        () => {
-          this.loading = false;
-          this.errors = [];
-          this.logged = ["Board found! Loading..."];
-          new Promise(resolve => setTimeout(resolve, 1500)).then(() => {
-            this.$router.push({ name: "home" });
-          });
-        },
-        () => {
-          this.loading = false;
-          this.logged = [];
-          this.errors = ["Invalid code."];
-        }
-      );
+      this.$store
+        .dispatch("login", this.local_board_code)
+        .then(
+          () => {
+            this.loading = false;
+            this.errors = [];
+            this.logged = ["Board found! Loading..."];
+            return this.$store.dispatch("require_everything");
+          },
+          e => {
+            this.loading = false;
+            this.logged = [];
+            this.errors = ["Invalid code."];
+            throw e;
+          }
+        )
+        .then(() => {
+          this.$router.push({ name: "home" });
+        });
     },
 
     signup() {
       this.loading = true;
-      this.$store.dispatch("register", this.new_board_name).then(
-        () => {
-          this.loading = false;
-          this.signup_errors = [];
-          this.signup_success = ["Board created! Loading..."];
-          new Promise(resolve => setTimeout(resolve, 1500)).then(() => {
-            this.$router.push({ name: "home" });
-          });
-        },
-        () => {
-          this.loading = false;
-          this.signup_success = [];
-          this.errors = ["Error creating board."];
-        }
-      );
+      this.$store
+        .dispatch("register", this.new_board_name)
+        .then(
+          () => {
+            this.loading = false;
+            this.signup_errors = [];
+            this.signup_success = ["Board created! Loading..."];
+            return this.$store.dispatch("require_everything");
+          },
+          e => {
+            this.loading = false;
+            this.signup_success = [];
+            this.errors = ["Error creating board."];
+            throw e
+          }
+        )
+        .then(() => {
+          this.$router.push({ name: "home" });
+        });
     }
   },
 

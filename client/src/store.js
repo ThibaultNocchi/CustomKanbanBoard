@@ -53,6 +53,11 @@ export default new Vuex.Store({
         .then(r => (context.state.api.parse_response(r)))
         .then(users => { context.commit('set_users', users) },
           exc => { console.log(exc); throw exc })
+    },
+
+    require_everything(context) {
+      let promises = Promise.all([context.dispatch('get_users')]);
+      return promises;
     }
 
   }
