@@ -9,10 +9,12 @@ class API {
             .then(json => {
 
                 if (json.success) {
-                    if (json.type === 'Collection') {
-                        return this.parse_multi_object(json.response, json.inner_type)
-                    } else {
-                        return this.parse_single_object(json.response, json.type)
+                    if (json.response) {
+                        if (json.type === 'Collection') {
+                            return this.parse_multi_object(json.response, json.inner_type)
+                        } else {
+                            return this.parse_single_object(json.response, json.type)
+                        }
                     }
                 } else {
                     throw json.exception
@@ -60,6 +62,10 @@ class API {
         let datas = new FormData()
         datas.append('name', name)
         return fetch(`${this.URL}user`, { method: 'POST', body: datas, headers: { "board": board.code } })
+    }
+
+    remove_user(board, name) {
+        return fetch(`${this.URL}user/${name}`, { method: 'DELETE', headers: { "board": board.code } })
     }
 
 }

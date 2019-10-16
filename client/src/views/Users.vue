@@ -117,7 +117,14 @@ export default {
 
   methods: {
     remove_user(name) {
-      alert(name);
+      this.$store.dispatch("remove_user", name).then(
+        () => {
+          // this.clear_new_name();
+        },
+        () => {
+          // this.new_user_errors = ['Name already taken.']
+        }
+      );
     },
 
     click_add_button() {
@@ -143,7 +150,7 @@ export default {
           this.clear_new_name();
         },
         () => {
-          this.new_user_errors = ['Name already taken.']
+          this.new_user_errors = ["Name already taken."];
         }
       );
     }
