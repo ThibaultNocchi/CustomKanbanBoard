@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\NoLineException;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -88,8 +89,11 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(string $name)
     {
-        //
+        $user = Auth::user()->users()->onName($name)->first();
+        if($user === null) throw new NoLineException('No user named like that in this board.');
+        $user->delete();
+        return response()->json();
     }
 }
