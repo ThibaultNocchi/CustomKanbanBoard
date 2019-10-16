@@ -70,6 +70,7 @@
               hint="Add a new user."
               persistent-hint
               autofocus
+              :error-messages="new_user_errors"
               ref="new_user_input"
               v-show="!btn_add"
               v-model="new_user_field"
@@ -137,7 +138,14 @@ export default {
     },
 
     submit_new_name() {
-      
+      this.$store.dispatch("register_user", this.new_user_field).then(
+        () => {
+          this.clear_new_name();
+        },
+        () => {
+          this.new_user_errors = ['Name already taken.']
+        }
+      );
     }
   }
 };

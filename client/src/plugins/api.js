@@ -56,6 +56,12 @@ class API {
         return fetch(`${this.URL}user`, { headers: { "board": board.code } });
     }
 
+    register_user(board, name) {
+        let datas = new FormData()
+        datas.append('name', name)
+        return fetch(`${this.URL}user`, { method: 'POST', body: datas, headers: { "board": board.code } })
+    }
+
 }
 
 class Board {
@@ -71,7 +77,7 @@ class Board {
 }
 
 class User {
-    constructor() {}
+    constructor() { }
     set response(resp) {
         this.name = resp.name
     }
