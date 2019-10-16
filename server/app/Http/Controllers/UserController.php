@@ -46,7 +46,7 @@ class UserController extends Controller
             throw new ValidationFailedException('', $validator->errors());
         }
 
-        return response()->json(User::register(Auth::user(), $request->name));
+        return response()->json(User::register(Auth::user(), urldecode($request->name)));
     }
 
     /**
@@ -91,6 +91,7 @@ class UserController extends Controller
      */
     public function destroy(string $name)
     {
+        $name = urldecode($name);
         $user = Auth::user()->users()->onName($name)->first();
         if($user === null) throw new NoLineException('No user named like that in this board.');
         $user->delete();
