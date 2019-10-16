@@ -37,6 +37,7 @@
                       prepend-icon="dashboard"
                       type="text"
                       counter="6"
+                      autofocus
                       :rules="[rules.code_length]"
                       :loading="loading"
                       :disabled="loading"
