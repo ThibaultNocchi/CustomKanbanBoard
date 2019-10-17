@@ -40,6 +40,10 @@ class Board extends Model
         return $this->hasMany('App\User');
     }
 
+    public function cards() {
+        return $this->hasMany('App\Card');
+    }
+
     public function scopeWithCode($query, string $code) {
         return $query->where('code', $code);
     }

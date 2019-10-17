@@ -22,3 +22,7 @@ $router->group(['prefix' => 'user', 'middleware' => 'auth'], function () use($ro
     $router->post('', ['uses' => 'UserController@store']);
     $router->delete('{name}', ['uses' => 'UserController@destroy']);
 });
+
+$router->group(['prefix' => 'card', 'middleware' => 'auth'], function () use($router) {
+    $router->get('', ['uses' => 'CardController@index']);
+});
