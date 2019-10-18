@@ -94,7 +94,7 @@ class CardController extends Controller
         $name = urldecode($name);
         $card = Auth::user()->cards()->onName($name)->first();
         if($card === null) throw new NoLineException('No card named like that in this board.');
-        $card->delete();
+        $card->remove_card();
         return response()->json();
     }
 }

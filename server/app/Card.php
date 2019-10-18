@@ -22,6 +22,13 @@ class Card extends Model
         return $card;
 
     }
+
+    public function remove_card() {
+        $order = $this->order;
+        $board = $this->board;
+        $this->delete();
+        $board->cards()->afterOrder($order)->decrement('order');
+    }
     
     public function board() {
         return $this->belongsTo('App\Board');
@@ -33,6 +40,10 @@ class Card extends Model
 
     public function scopeOnOrder($query, int $order) {
         return $query->where('order', $order);
+    }
+
+    public function scopeAfterOrder($query, int $order) {
+        return $query->where('order', '>', $order);
     }
 
     public function scopeOrdered($query) {
