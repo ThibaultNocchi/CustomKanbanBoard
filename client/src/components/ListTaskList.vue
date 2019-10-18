@@ -3,10 +3,10 @@
     <v-col
       sm="6"
       cols="12"
-      v-for="list in $store.state.lists"
-      :key="list.name"
+      v-for="card in $store.state.cards"
+      :key="card.name"
     >
-      <task-list :list="list"></task-list>
+      <task-list :card="card"></task-list>
     </v-col>
   </v-row>
 </template>

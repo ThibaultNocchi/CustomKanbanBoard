@@ -1,9 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import Task from '@/plugins/task.js'
-import TasksList from '@/plugins/taskslist.js'
-
 import api from '@/plugins/api.js'
 
 Vue.use(Vuex)
@@ -16,7 +13,6 @@ export default new Vuex.Store({
     board: null,
     users: [],
 
-    // lists: [new TasksList('Pending', [new Task('Tache 1', 'Corps 1')])]
     cards: []
   },
 
@@ -28,6 +24,7 @@ export default new Vuex.Store({
       state.users = val
     },
     set_cards(state, val) {
+      val.sort((a, b) => { a.order - b.order })
       state.cards = val
     }
   },
