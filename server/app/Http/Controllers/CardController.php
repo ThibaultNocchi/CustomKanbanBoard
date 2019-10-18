@@ -86,11 +86,15 @@ class CardController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  string $name
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(string $name)
     {
-        //
+        $name = urldecode($name);
+        $card = Auth::user()->cards()->onName($name)->first();
+        if($card === null) throw new NoLineException('No card named like that in this board.');
+        $card->delete();
+        return response()->json();
     }
 }
