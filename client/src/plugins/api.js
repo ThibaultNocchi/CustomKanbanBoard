@@ -77,6 +77,12 @@ class API {
         return fetch(`${this.URL}card`, { headers: { "board": board.code } });
     }
 
+    register_card(board, name) {
+        let datas = new FormData()
+        datas.append('name', name)
+        return fetch(`${this.URL}card`, { method: 'POST', body: datas, headers: { "board": board.code } })
+    }
+
 }
 
 class Board {

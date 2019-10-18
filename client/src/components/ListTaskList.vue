@@ -1,5 +1,5 @@
 <template>
-  <v-row dense>
+  <v-row>
 
     <v-col
       sm="6"
@@ -35,7 +35,7 @@ export default {
   components: { TaskList, NewButtonInput },
   methods: {
     submit_card (name) {
-      alert(`adding ${name} card`)
+      return this.$store.dispatch("register_card", name);
     }
   }
 };
