@@ -16,7 +16,8 @@ export default new Vuex.Store({
     board: null,
     users: [],
 
-    lists: [new TasksList('Pending', [new Task('Tache 1', 'Corps 1')])]
+    // lists: [new TasksList('Pending', [new Task('Tache 1', 'Corps 1')])]
+    cards: []
   },
 
   mutations: {
@@ -25,6 +26,9 @@ export default new Vuex.Store({
     },
     set_users(state, val) {
       state.users = val
+    },
+    set_cards(state, val) {
+      state.cards = val
     }
   },
 
@@ -73,8 +77,15 @@ export default new Vuex.Store({
           exc => { console.log(exc); throw exc })
     },
 
+    get_cards(context) {
+      return context.state.api.get_cards(context.state.board)
+        .then(r => (context.state.api.parse_response(r)))
+        .then(cards => { context.commit('set_cards', cards) },
+          exc => { console.log(exc); throw exc })
+    },
+
     require_everything(context) {
-      let promises = Promise.all([context.dispatch('get_users')]);
+      let promises = Promise.all([context.dispatch('get_users'), context.dispatch('get_cards')]);
       return promises;
     }
 

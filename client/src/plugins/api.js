@@ -42,6 +42,11 @@ class API {
             user.response = o
             return user
         }
+        if(type === 'Card') {
+            let card = new Card()
+            card.response = o
+            return card
+        }
     }
 
     login(code) {
@@ -68,6 +73,10 @@ class API {
         return fetch(`${this.URL}user/${name}`, { method: 'DELETE', headers: { "board": board.code } })
     }
 
+    get_cards(board) {
+        return fetch(`${this.URL}card`, { headers: { "board": board.code } });
+    }
+
 }
 
 class Board {
@@ -89,4 +98,12 @@ class User {
     }
 }
 
-module.exports = { API, Board, User }
+class Card {
+    constructor() { }
+    set response(resp) {
+        this.name = resp.name
+        this.order = resp.order
+    }
+}
+
+module.exports = { API, Board, User, Card }
