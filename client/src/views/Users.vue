@@ -49,51 +49,13 @@
         md="6"
         sm="6"
       >
-        <v-scale-transition hide-on-leave>
-          <v-btn
-            outlined
-            color="primary"
-            large
-            @click="click_add_button"
-            v-show="btn_add"
-          >
-            <v-icon left>add_circle</v-icon> Add user
-          </v-btn>
-        </v-scale-transition>
-        <v-scale-transition hide-on-leave>
-          <v-form
-            @submit="submit_new_name"
-            onSubmit="return false"
-          >
-            <v-text-field
-              placeholder="New name"
-              hint="Add a new user."
-              persistent-hint
-              autofocus
-              :error-messages="new_user_errors"
-              ref="new_user_input"
-              v-show="!btn_add"
-              v-model="new_user_field"
-            >
-              <template v-slot:append>
-                <v-btn
-                  icon
-                  color="primary"
-                  @click="submit_new_name"
-                >
-                  <v-icon>send</v-icon>
-                </v-btn>
-                <v-btn
-                  icon
-                  color="error"
-                  @click="clear_new_name"
-                >
-                  <v-icon>close</v-icon>
-                </v-btn>
-              </template>
-            </v-text-field>
-          </v-form>
-        </v-scale-transition>
+        <new-button-input
+          txt-btn="New user"
+          txt-placeholder="Name"
+          txt-hint="New user name."
+          txt-error="Name already taken."
+          :send="submit_name"
+        ></new-button-input>
       </v-col>
 
     </v-row>
@@ -103,56 +65,18 @@
 
 <script>
 import DefaultView from "@/components/DefaultView.vue";
+import NewButtonInput from "@/components/NewButtonInput.vue";
 
 export default {
-  components: { DefaultView },
-
-  data() {
-    return {
-      btn_add: true,
-      new_user_field: null,
-      new_user_errors: []
-    };
-  },
+  components: { DefaultView, NewButtonInput },
 
   methods: {
     remove_user(name) {
-      this.$store.dispatch("remove_user", name).then(
-        () => {
-          // this.clear_new_name();
-        },
-        () => {
-          // this.new_user_errors = ['Name already taken.']
-        }
-      );
+      this.$store.dispatch("remove_user", name);
     },
 
-    click_add_button() {
-      this.btn_add = false;
-      new Promise(resolve => {
-        setTimeout(() => {
-          resolve();
-        });
-      }, 200).then(() => {
-        this.$refs.new_user_input.focus();
-      });
-    },
-
-    clear_new_name() {
-      this.btn_add = true;
-      this.new_user_field = null;
-      this.new_user_errors = [];
-    },
-
-    submit_new_name() {
-      this.$store.dispatch("register_user", this.new_user_field).then(
-        () => {
-          this.clear_new_name();
-        },
-        () => {
-          this.new_user_errors = ["Name already taken."];
-        }
-      );
+    submit_name(name) {
+      return this.$store.dispatch("register_user", name);
     }
   }
 };
