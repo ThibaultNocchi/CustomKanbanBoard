@@ -15,7 +15,9 @@ class Card extends Model
         $card = new self();
         if($b->cards()->onName($name)->exists()) throw new InvalidNameException('Card name taken.');
         $card->name = $name;
-        $card->order = ($b->cards()->max('order')) + 1;
+        $max = $b->cards()->max('order');
+        if($max === null) $card->order = 0;
+        else $card->order = $max + 1;
         $b->cards()->save($card);
         return $card;
 
