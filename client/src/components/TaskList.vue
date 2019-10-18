@@ -80,7 +80,7 @@ export default {
   components: { TaskCard },
   methods: {
     delete_card (name) {
-      console.log(name)
+      this.$store.dispatch('remove_card', name)
     }
   }
 };

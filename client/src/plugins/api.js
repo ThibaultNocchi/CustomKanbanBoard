@@ -83,6 +83,10 @@ class API {
         return fetch(`${this.URL}card`, { method: 'POST', body: datas, headers: { "board": board.code } })
     }
 
+    remove_card(board, name) {
+        return fetch(`${this.URL}card/${name}`, { method: 'DELETE', headers: { "board": board.code } })
+    }
+
 }
 
 class Board {

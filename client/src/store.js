@@ -90,6 +90,15 @@ export default new Vuex.Store({
           exc => { console.log(exc); throw exc })
     },
 
+    remove_card(context, name) {
+      return context.state.api.remove_card(context.state.board, name)
+        .then(r => (context.state.api.parse_response(r)))
+        .then(() => { return context.dispatch('require_everything') },
+          exc => { console.log(exc); throw exc })
+        .then(() => null,
+          exc => { console.log(exc); throw exc })
+    },
+
     require_everything(context) {
       let promises = Promise.all([context.dispatch('get_users'), context.dispatch('get_cards')]);
       return promises;
