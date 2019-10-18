@@ -25,4 +25,5 @@ $router->group(['prefix' => 'user', 'middleware' => 'auth'], function () use($ro
 
 $router->group(['prefix' => 'card', 'middleware' => 'auth'], function () use($router) {
     $router->get('', ['uses' => 'CardController@index']);
+    $router->post('', ['uses' => 'CardController@store']);
 });

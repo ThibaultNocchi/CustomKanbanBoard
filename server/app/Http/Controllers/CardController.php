@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Card;
+use App\Exceptions\ValidationFailedException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class CardController extends Controller
 {
@@ -14,7 +17,7 @@ class CardController extends Controller
      */
     public function index()
     {
-        return response()->json(Auth::user()->cards()->orderBy('order')->get());
+        return response()->json(Auth::user()->cards()->ordered()->get());
     }
 
     /**
@@ -35,7 +38,15 @@ class CardController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:127'
+        ]);
+
+        if($validator->fails()){
+            throw new ValidationFailedException('', $validator->errors());
+        }
+
+        return response()->json(Card::register(Auth::user(), urldecode($request->name)));
     }
 
     /**

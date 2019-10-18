@@ -48,7 +48,7 @@ class BoardController extends Controller
             throw new ValidationFailedException('', $validator->errors());
         }
 
-        return response()->json(Board::register($request->name));
+        return response()->json(Board::register(urldecode($request->name)));
 
     }
 
