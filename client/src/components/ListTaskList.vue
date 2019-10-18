@@ -4,12 +4,14 @@
     v-model="cards_list"
     class="row"
   >
-    <task-list
+    <v-col
+      cols="12"
+      sm="6"
       v-for="card in cards_list"
       :key="card.name"
-      :card="card"
-      class="col-12 col-sm-6"
-    ></task-list>
+    >
+      <task-list :card="card"></task-list>
+    </v-col>
   </draggable>
 
 </template>
