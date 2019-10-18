@@ -1,41 +1,41 @@
 <template>
-  <v-row>
 
-    <v-col
-      sm="6"
-      cols="12"
-      v-for="card in $store.state.cards"
+  <draggable
+    v-model="cards_list"
+    class="row"
+  >
+    <task-list
+      v-for="card in cards_list"
       :key="card.name"
-    >
-      <task-list :card="card"></task-list>
-    </v-col>
+      :card="card"
+      class="col-12 col-sm-6"
+    ></task-list>
+  </draggable>
 
-    <v-col
-      class="d-flex align-center justify-center"
-      cols="12"
-      sm="6"
-    >
-      <new-button-input
-          txt-btn="New card"
-          txt-placeholder="Name"
-          txt-hint="New card name."
-          txt-error="Card already exists."
-          :send="submit_card"
-        ></new-button-input>
-    </v-col>
-
-  </v-row>
 </template>
 
 <script>
 import TaskList from "@/components/TaskList.vue";
 import NewButtonInput from "@/components/NewButtonInput.vue";
+import Draggable from "vuedraggable";
 
 export default {
-  components: { TaskList, NewButtonInput },
+  components: { TaskList, NewButtonInput, Draggable },
+
   methods: {
-    submit_card (name) {
+    submit_card(name) {
       return this.$store.dispatch("register_card", name);
+    }
+  },
+
+  computed: {
+    cards_list: {
+      get() {
+        return this.$store.state.cards;
+      },
+      set(value) {
+        this.$store.commit("set_cards", value);
+      }
     }
   }
 };
