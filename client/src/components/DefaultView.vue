@@ -59,7 +59,10 @@
 
       <v-list nav>
 
-        <v-list-item link :to="{name: 'home'}">
+        <v-list-item
+          link
+          :to="{name: 'home'}"
+        >
           <v-list-item-icon>
             <v-icon>home</v-icon>
           </v-list-item-icon>
@@ -68,7 +71,10 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-item link :to="{name: 'users'}">
+        <v-list-item
+          link
+          :to="{name: 'users'}"
+        >
           <v-list-item-icon>
             <v-icon>person</v-icon>
           </v-list-item-icon>
@@ -81,7 +87,10 @@
 
       <v-divider></v-divider>
 
-      <v-list nav dense>
+      <v-list
+        nav
+        dense
+      >
 
         <v-list-item
           link
@@ -98,12 +107,29 @@
       </v-list>
 
       <template v-slot:append>
+
+        <v-list
+          nav
+        >
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon color="success darken-2" v-if="!$store.state.syncing">done</v-icon>
+              <v-icon color="error darken-2" v-if="$store.state.syncing">sync</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title class="success--text text--darken-2" v-if="!$store.state.syncing">Synced!</v-list-item-title>
+              <v-list-item-title class="error--text text--darken-2" v-if="$store.state.syncing">Syncing...</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+
         <div class="pa-2">
           <v-btn
             block
             @click="logout"
           >Logout</v-btn>
         </div>
+
       </template>
 
     </v-navigation-drawer>
