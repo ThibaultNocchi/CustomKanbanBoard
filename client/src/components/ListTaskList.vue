@@ -4,6 +4,7 @@
     v-model="cards_list"
     class="row"
     draggable=".card-item"
+    @change="cards_switched"
   >
 
     <v-col
@@ -46,6 +47,13 @@ export default {
   methods: {
     submit_card(name) {
       return this.$store.dispatch("register_card", name);
+    },
+
+    cards_switched(type) {
+      if ("moved" in type) {
+        console.log(type.moved.newIndex);
+        console.log(type.moved.oldIndex);
+      }
     }
   },
 
