@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Card;
+use App\Exceptions\NoLineException;
 use App\Exceptions\ValidationFailedException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -95,6 +96,14 @@ class CardController extends Controller
         $card = Auth::user()->cards()->onName($name)->first();
         if($card === null) throw new NoLineException('No card named like that in this board.');
         $card->remove_card();
+        return response()->json();
+    }
+
+    public function switch(int $order1, int $order2) {
+        $card1 = Auth::user()->cards()->onOrder($order1)->first();
+        $card2 = Auth::user()->cards()->onOrder($order2)->first();
+        if($card1 === null || $card2 === null) throw new NoLineException('Cards not found.');
+        $card1->switch_with($card2);
         return response()->json();
     }
 }

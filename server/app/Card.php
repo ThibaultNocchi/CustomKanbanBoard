@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Exceptions\InvalidNameException;
+use App\Exceptions\NoLineException;
 use Illuminate\Database\Eloquent\Model;
 
 class Card extends Model
@@ -28,6 +29,21 @@ class Card extends Model
         $board = $this->board;
         $this->delete();
         $board->cards()->afterOrder($order)->decrement('order');
+    }
+
+    public function switch_with(self $other) {
+        if(!$this->board->is($other->board)) {
+            throw new NoLineException('Problem matching boards.');
+        }
+        $order1 = $this->order;
+        $order2 = $other->order;
+        $orderTmp = $this->board->cards()->max('order') + 1;
+        $this->order = $orderTmp;
+        $other->order = $order1;
+        $this->save();
+        $other->save();
+        $this->order = $order2;
+        $this->save();
     }
     
     public function board() {
