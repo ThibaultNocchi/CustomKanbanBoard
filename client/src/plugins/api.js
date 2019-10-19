@@ -87,6 +87,10 @@ class API {
         return fetch(`${this.URL}card/${name}`, { method: 'DELETE', headers: { "board": board.code } })
     }
 
+    switch_cards(board, order1, order2) {
+        return fetch(`${this.URL}card/switch/${order1}/${order2}`, { method: 'PUT', headers: { "board": board.code } })
+    }
+
 }
 
 class Board {

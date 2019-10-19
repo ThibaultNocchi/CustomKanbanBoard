@@ -99,6 +99,12 @@ export default new Vuex.Store({
           exc => { console.log(exc); throw exc })
     },
 
+    switch_cards(context, { order1, order2 }) {
+      return context.state.api.switch_cards(context.state.board, order1, order2)
+        .then(r => (context.state.api.parse_response(r)))
+        .catch(exc => { console.log(exc) })
+    },
+
     require_everything(context) {
       let promises = Promise.all([context.dispatch('get_users'), context.dispatch('get_cards')]);
       return promises;

@@ -51,8 +51,10 @@ export default {
 
     cards_switched(type) {
       if ("moved" in type) {
-        console.log(type.moved.newIndex);
-        console.log(type.moved.oldIndex);
+        this.$store.dispatch("switch_cards", {
+          order1: type.moved.newIndex,
+          order2: type.moved.oldIndex
+        });
       }
     }
   },
