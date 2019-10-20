@@ -65,7 +65,7 @@
 
     <v-card-text>
 
-      <!-- <task-card class="ma-1" v-for="(task, idx) in card.tasks" :key="idx" :task="task"></task-card> -->
+      <task-card class="ma-1" v-for="(task, idx) in card.tasks" :key="idx" :task="task"></task-card>
 
     </v-card-text>
 
