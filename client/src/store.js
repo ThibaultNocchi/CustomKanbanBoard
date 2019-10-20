@@ -113,6 +113,16 @@ export default new Vuex.Store({
         .catch(exc => { console.log(exc) })
     },
 
+    register_task(context, {card, name}) {
+      context.state.syncing++
+      return context.state.api.register_task(context.state.board, card, name)
+        .then(r => {context.state.syncing--; return context.state.api.parse_response(r)})
+        .then(() => { return context.dispatch('require_everything') },
+          exc => { console.log(exc); throw exc })
+        .then(() => null,
+          exc => { console.log(exc); throw exc })
+    },
+
     require_everything(context) {
       let promises = Promise.all([context.dispatch('get_users'), context.dispatch('get_cards')]);
       return promises;

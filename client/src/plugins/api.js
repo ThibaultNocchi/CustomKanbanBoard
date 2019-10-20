@@ -91,6 +91,12 @@ class API {
         return fetch(`${this.URL}card/switch/${order1}/${order2}`, { method: 'PUT', headers: { "board": board.code } })
     }
 
+    register_task(board, card, name) {
+        let datas = new FormData()
+        datas.append('name', name)
+        return fetch(`${this.URL}card/${card.name}`, { method: 'POST', headers: { "board": board.code }, body: datas })
+    }
+
 }
 
 class Board {

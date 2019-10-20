@@ -73,13 +73,15 @@
       ></task-card>
       <v-card flat>
         <v-card-text>
-          <!-- <v-btn
+          <new-button-input
+            txtBtn="New task"
+            txtPlaceholder="Task title"
+            txtError="Unexpected error."
+            iconName="add"
             text
             block
-          >
-            <v-icon left>add</v-icon>New task<v-spacer></v-spacer>
-          </v-btn> -->
-          <new-button-input txtBtn="New task" iconName="add" text block></new-button-input>
+            :send="add_task"
+          ></new-button-input>
         </v-card-text>
       </v-card>
 
@@ -91,7 +93,7 @@
 
 <script>
 import TaskCard from "@/components/TaskCard.vue";
-import NewButtonInput from "@/components/NewButtonInput.vue"
+import NewButtonInput from "@/components/NewButtonInput.vue";
 
 export default {
   data() {
@@ -99,6 +101,7 @@ export default {
       dialog_delete: false
     };
   },
+
   props: {
     card: Object,
     draggable_ptn: {
@@ -107,10 +110,16 @@ export default {
       default: false
     }
   },
+
   components: { TaskCard, NewButtonInput },
+
   methods: {
     delete_card(name) {
       this.$store.dispatch("remove_card", name);
+    },
+
+    add_task(name) {
+      return this.$store.dispatch("register_task", { card: this.card, name: name });
     }
   }
 };
