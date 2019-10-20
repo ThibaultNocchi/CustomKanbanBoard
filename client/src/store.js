@@ -9,7 +9,7 @@ export default new Vuex.Store({
 
   state: {
 
-    syncing: false,
+    syncing: 0,
 
     api: new api.API('http://super.kanban:8372/'),
 
@@ -60,9 +60,9 @@ export default new Vuex.Store({
     },
 
     register_user(context, name) {
-      context.state.syncing = true
+      context.state.syncing++
       return context.state.api.register_user(context.state.board, name)
-        .then(r => {context.state.syncing = false; return context.state.api.parse_response(r)})
+        .then(r => {context.state.syncing--; return context.state.api.parse_response(r)})
         .then(() => { return context.dispatch('require_everything') },
           exc => { console.log(exc); throw exc })
         .then(() => null,
@@ -70,9 +70,9 @@ export default new Vuex.Store({
     },
 
     remove_user(context, name) {
-      context.state.syncing = true
+      context.state.syncing++
       return context.state.api.remove_user(context.state.board, name)
-        .then(r => {context.state.syncing = false; return context.state.api.parse_response(r)})
+        .then(r => {context.state.syncing--; return context.state.api.parse_response(r)})
         .then(() => { return context.dispatch('require_everything') },
           exc => { console.log(exc); throw exc })
         .then(() => null,
@@ -87,9 +87,9 @@ export default new Vuex.Store({
     },
 
     register_card(context, name) {
-      context.state.syncing = true
+      context.state.syncing++
       return context.state.api.register_card(context.state.board, name)
-        .then(r => {context.state.syncing = false; return context.state.api.parse_response(r)})
+        .then(r => {context.state.syncing--; return context.state.api.parse_response(r)})
         .then(() => { return context.dispatch('require_everything') },
           exc => { console.log(exc); throw exc })
         .then(() => null,
@@ -97,9 +97,9 @@ export default new Vuex.Store({
     },
 
     remove_card(context, name) {
-      context.state.syncing = true
+      context.state.syncing++
       return context.state.api.remove_card(context.state.board, name)
-        .then(r => {context.state.syncing = false; return context.state.api.parse_response(r)})
+        .then(r => {context.state.syncing--; return context.state.api.parse_response(r)})
         .then(() => { return context.dispatch('require_everything') },
           exc => { console.log(exc); throw exc })
         .then(() => null,
@@ -107,9 +107,9 @@ export default new Vuex.Store({
     },
 
     switch_cards(context, { order1, order2 }) {
-      context.state.syncing = true
+      context.state.syncing++
       return context.state.api.switch_cards(context.state.board, order1, order2)
-        .then(r => {context.state.syncing = false; return context.state.api.parse_response(r)})
+        .then(r => {context.state.syncing--; return context.state.api.parse_response(r)})
         .catch(exc => { console.log(exc) })
     },
 
