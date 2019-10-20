@@ -8,7 +8,7 @@
         md="6"
         sm="6"
         v-for="user in $store.state.users"
-        :key="user.name"
+        :key="user.id"
       >
         <v-card outlined>
           <v-row>
@@ -31,7 +31,7 @@
             >
               <v-btn
                 icon
-                @click="remove_user(user.name)"
+                @click="remove_user(user)"
               >
                 <v-icon color="red">close</v-icon>
               </v-btn>
@@ -73,8 +73,8 @@ export default {
   components: { DefaultView, NewButtonInput },
 
   methods: {
-    remove_user(name) {
-      this.$store.dispatch("remove_user", name);
+    remove_user(user) {
+      this.$store.dispatch("remove_user", user);
     },
 
     submit_name(name) {

@@ -89,10 +89,9 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(string $name)
+    public function destroy(int $id)
     {
-        $name = urldecode($name);
-        $user = Auth::user()->users()->onName($name)->first();
+        $user = Auth::user()->users()->find($id)->first();
         if($user === null) throw new NoLineException('No user named like that in this board.');
         $user->delete();
         return response()->json();

@@ -9,7 +9,7 @@ use ReflectionClass;
 class User extends Model
 {
 
-    protected $hidden = ['created_at', 'updated_at', 'id', 'board_id'];
+    protected $hidden = ['created_at', 'updated_at', 'board_id'];
 
     public static function register(Board $b, string $name) {
         if($b->users()->onName($name)->first() !== null) {

@@ -69,8 +69,8 @@ class API {
         return fetch(`${this.URL}user`, { method: 'POST', body: datas, headers: { "board": board.code } })
     }
 
-    remove_user({ board, name }) {
-        return fetch(`${this.URL}user/${name}`, { method: 'DELETE', headers: { "board": board.code } })
+    remove_user({ board, user }) {
+        return fetch(`${this.URL}user/${user.id}`, { method: 'DELETE', headers: { "board": board.code } })
     }
 
     get_cards({ board }) {
@@ -114,6 +114,7 @@ class Board {
 class User {
     constructor() { }
     set response(resp) {
+        this.id = resp.id
         this.name = resp.name
     }
 }

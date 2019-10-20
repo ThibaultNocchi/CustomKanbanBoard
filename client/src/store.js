@@ -81,8 +81,8 @@ export default new Vuex.Store({
       return context.dispatch('do_action', { api_method: 'register_user', params: { board: context.state.board, name: name }, sync_counter: true, require_everything: true })
     },
 
-    remove_user(context, name) {
-      return context.dispatch('do_action', { api_method: 'remove_user', params: { board: context.state.board, name: name }, sync_counter: true, require_everything: true })
+    remove_user(context, user) {
+      return context.dispatch('do_action', { api_method: 'remove_user', params: { board: context.state.board, user: user }, sync_counter: true, require_everything: true })
     },
 
     get_cards(context) {
