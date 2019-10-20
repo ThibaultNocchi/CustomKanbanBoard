@@ -14,7 +14,7 @@
       :key="card.name"
       class="card-item"
     >
-      <task-list :card="card"></task-list>
+      <task-list draggable_ptn :card="card"></task-list>
     </v-col>
 
     <v-col

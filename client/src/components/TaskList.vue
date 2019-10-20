@@ -9,7 +9,7 @@
       transition="slide-y-transition"
     >
       <template v-slot:activator="{on}">
-        <v-card-title>{{card.name}}
+        <v-card-title :class="{draggable_ptn}">{{card.name}}
           <v-spacer></v-spacer>
           <v-btn
             icon
@@ -49,8 +49,14 @@
         <v-card-text>You are going to delete the "{{card.name}}" card and all its associated tasks. Are you sure?</v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn text @click="dialog_delete = false">Cancel</v-btn>
-          <v-btn color="error darken-1" @click="delete_card(card.name)">Delete</v-btn>
+          <v-btn
+            text
+            @click="dialog_delete = false"
+          >Cancel</v-btn>
+          <v-btn
+            color="error darken-1"
+            @click="delete_card(card.name)"
+          >Delete</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -76,12 +82,25 @@ export default {
       dialog_delete: false
     };
   },
-  props: ["card"],
+  props: {
+    card: Object,
+    draggable_ptn: {
+      type: Boolean,
+      required: false,
+      default: false
+    }
+  },
   components: { TaskCard },
   methods: {
-    delete_card (name) {
-      this.$store.dispatch('remove_card', name)
+    delete_card(name) {
+      this.$store.dispatch("remove_card", name);
     }
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.draggable_ptn {
+  cursor: grab;
+}
+</style>
