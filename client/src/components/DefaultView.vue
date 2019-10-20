@@ -114,11 +114,11 @@
           <v-list-item>
             <v-list-item-icon>
               <v-icon color="success darken-2" v-if="!$store.state.syncing">done</v-icon>
-              <v-icon color="error darken-2" v-if="$store.state.syncing">sync</v-icon>
+              <v-progress-circular indeterminate color="warning darken-2" size="20" width="2" v-if="$store.state.syncing"></v-progress-circular>
             </v-list-item-icon>
             <v-list-item-content>
               <v-list-item-title class="success--text text--darken-2" v-if="!$store.state.syncing">Synced!</v-list-item-title>
-              <v-list-item-title class="error--text text--darken-2" v-if="$store.state.syncing">Syncing...</v-list-item-title>
+              <v-list-item-title class="warning--text text--darken-2" v-if="$store.state.syncing">Syncing...</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list>
