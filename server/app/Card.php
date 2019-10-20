@@ -10,6 +10,7 @@ class Card extends Model
 {
 
     protected $hidden = ['id', 'board_id', 'created_at', 'updated_at'];
+    protected $appends = ['tasks'];
 
     public static function register(Board $b, string $name) {
 
@@ -45,9 +46,17 @@ class Card extends Model
         $this->order = $order2;
         $this->save();
     }
+
+    public function getTasksAttribute(){
+        return $this->tasks()->ordered()->get();
+    }
     
     public function board() {
         return $this->belongsTo('App\Board');
+    }
+
+    public function tasks(){
+        return $this->hasMany('App\Task');
     }
 
     public function scopeOnName($query, string $name){
