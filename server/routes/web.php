@@ -28,4 +28,5 @@ $router->group(['prefix' => 'card', 'middleware' => 'auth'], function () use($ro
     $router->post('', ['uses' => 'CardController@store']);
     $router->delete('{name}', ['uses' => 'CardController@destroy']);
     $router->put('switch/{order1:[0-9]+}/{order2:[0-9]+}', ['uses' => 'CardController@switch']);
+    $router->post('{name}', ['uses' => 'TaskController@store']);
 });
