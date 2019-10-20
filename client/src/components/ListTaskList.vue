@@ -29,6 +29,8 @@
         txt-hint="New card name."
         txt-error="Card already exists."
         :send="submit_card"
+        large
+        outlined
       ></new-button-input>
     </v-col>
 

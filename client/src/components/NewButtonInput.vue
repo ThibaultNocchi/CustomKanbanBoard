@@ -2,13 +2,15 @@
   <div class="new_input_button">
     <v-scale-transition hide-on-leave>
       <v-btn
-        outlined
+        :outlined="outlined"
+        :text="text"
+        :block="block"
         color="primary"
-        large
+        :large="large"
         @click="btn_click"
         v-show="btn_add"
       >
-        <v-icon left>add_circle</v-icon>{{txtBtn}}
+        <v-icon left>{{iconName}}</v-icon>{{txtBtn}}
       </v-btn>
     </v-scale-transition>
     <v-scale-transition hide-on-leave>
@@ -57,7 +59,56 @@ export default {
       input_value: null
     };
   },
-  props: ["txtBtn", "txtPlaceholder", "txtHint", "txtError", "send"],
+
+  props: {
+    'txtBtn': {
+      type: String,
+      required: true
+    },
+    'txtPlaceholder': {
+      type: String,
+      required: true
+    },
+    'txtHint': {
+      type: String,
+      required: false,
+      default: ''
+    },
+    'txtError': {
+      type: String,
+      required: true
+    },
+    'send': {
+      type: Function,
+      required: true
+    },
+    'iconName': {
+      type: String,
+      required: false,
+      default: 'add_circle'
+    },
+    'large': {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    'outlined': {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    'text': {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    'block': {
+      type: Boolean,
+      required: false,
+      default: false
+    }
+  },
+
   methods: {
     btn_click() {
       this.btn_add = false;

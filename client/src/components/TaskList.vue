@@ -65,7 +65,23 @@
 
     <v-card-text>
 
-      <task-card class="ma-1" v-for="(task, idx) in card.tasks" :key="idx" :task="task"></task-card>
+      <task-card
+        class="ma-1"
+        v-for="(task, idx) in card.tasks"
+        :key="idx"
+        :task="task"
+      ></task-card>
+      <v-card flat>
+        <v-card-text>
+          <!-- <v-btn
+            text
+            block
+          >
+            <v-icon left>add</v-icon>New task<v-spacer></v-spacer>
+          </v-btn> -->
+          <new-button-input txtBtn="New task" iconName="add" text block></new-button-input>
+        </v-card-text>
+      </v-card>
 
     </v-card-text>
 
@@ -75,6 +91,7 @@
 
 <script>
 import TaskCard from "@/components/TaskCard.vue";
+import NewButtonInput from "@/components/NewButtonInput.vue"
 
 export default {
   data() {
@@ -90,7 +107,7 @@ export default {
       default: false
     }
   },
-  components: { TaskCard },
+  components: { TaskCard, NewButtonInput },
   methods: {
     delete_card(name) {
       this.$store.dispatch("remove_card", name);

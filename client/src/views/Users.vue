@@ -55,6 +55,8 @@
           txt-hint="New user name."
           txt-error="Name already taken."
           :send="submit_name"
+          large
+          outlined
         ></new-button-input>
       </v-col>
 
