@@ -26,7 +26,8 @@ $router->group(['prefix' => 'user', 'middleware' => 'auth'], function () use($ro
 $router->group(['prefix' => 'card', 'middleware' => 'auth'], function () use($router) {
     $router->get('', ['uses' => 'CardController@index']);
     $router->post('', ['uses' => 'CardController@store']);
-    $router->delete('{name}', ['uses' => 'CardController@destroy']);
-    $router->put('switch/{order1:[0-9]+}/{order2:[0-9]+}', ['uses' => 'CardController@switch']);
-    $router->post('{name}', ['uses' => 'TaskController@store']);
+    $router->delete('{id:[0-9]+}', ['uses' => 'CardController@destroy']);
+    // $router->put('switch/{order1:[0-9]+}/{order2:[0-9]+}', ['uses' => 'CardController@switch']);
+    $router->put('{id1:[0-9]+}/switch_to/{id2:[0-9]+}', ['uses' => 'CardController@switch']);
+    $router->post('{card_id:[0-9]+}', ['uses' => 'TaskController@store']);
 });

@@ -37,7 +37,7 @@ class TaskController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(string $name, Request $request)
+    public function store(int $card_id, Request $request)
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:128',
@@ -47,7 +47,7 @@ class TaskController extends Controller
             throw new ValidationFailedException('', $validator->errors());
         }
 
-        $card = Auth::user()->cards()->onName(urldecode($name))->first();
+        $card = Auth::user()->cards()->find($card_id);
         if($card === null) throw new NoLineException('No card found.');
 
         return response()->json(Task::register($card, urldecode($request->name)));

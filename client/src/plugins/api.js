@@ -83,18 +83,18 @@ class API {
         return fetch(`${this.URL}card`, { method: 'POST', body: datas, headers: { "board": board.code } })
     }
 
-    remove_card({ board, name }) {
-        return fetch(`${this.URL}card/${name}`, { method: 'DELETE', headers: { "board": board.code } })
+    remove_card({ board, card }) {
+        return fetch(`${this.URL}card/${card.id}`, { method: 'DELETE', headers: { "board": board.code } })
     }
 
-    switch_cards({ board, order1, order2 }) {
-        return fetch(`${this.URL}card/switch/${order1}/${order2}`, { method: 'PUT', headers: { "board": board.code } })
+    switch_cards({ board, card1, card2 }) {
+        return fetch(`${this.URL}card/${card1.id}/switch_to/${card2.id}`, { method: 'PUT', headers: { "board": board.code } })
     }
 
     register_task({ board, card, name }) {
         let datas = new FormData()
         datas.append('name', name)
-        return fetch(`${this.URL}card/${card.name}`, { method: 'POST', headers: { "board": board.code }, body: datas })
+        return fetch(`${this.URL}card/${card.id}`, { method: 'POST', headers: { "board": board.code }, body: datas })
     }
 
 }
@@ -122,6 +122,7 @@ class User {
 class Card {
     constructor() { }
     set response(resp) {
+        this.id = resp.id
         this.name = resp.name
         this.order = resp.order
         this.tasks = []
@@ -136,6 +137,7 @@ class Card {
 class Task {
     constructor() { }
     set response(resp) {
+        this.id = resp.id
         this.name = resp.name
         this.description = resp.description
         this.color = resp.color

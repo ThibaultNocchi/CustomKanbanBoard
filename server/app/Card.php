@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Card extends Model
 {
 
-    protected $hidden = ['id', 'board_id', 'created_at', 'updated_at'];
+    protected $hidden = ['board_id', 'created_at', 'updated_at'];
     protected $appends = ['tasks'];
 
     public static function register(Board $b, string $name) {

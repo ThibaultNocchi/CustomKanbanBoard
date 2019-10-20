@@ -93,12 +93,12 @@ export default new Vuex.Store({
       return context.dispatch('do_action', { api_method: 'register_card', params: { board: context.state.board, name: name }, sync_counter: true, require_everything: true })
     },
 
-    remove_card(context, name) {
-      return context.dispatch('do_action', { api_method: 'remove_card', params: { board: context.state.board, name: name }, sync_counter: true, require_everything: true })
+    remove_card(context, card) {
+      return context.dispatch('do_action', { api_method: 'remove_card', params: { board: context.state.board, card: card }, sync_counter: true, require_everything: true })
     },
 
-    switch_cards(context, { order1, order2 }) {
-      return context.dispatch('do_action', { api_method: 'switch_cards', params: { board: context.state.board, order1: order1, order2: order2 }, sync_counter: true })
+    switch_cards(context, { card1, card2 }) {
+      return context.dispatch('do_action', { api_method: 'switch_cards', params: { board: context.state.board, card1: card1, card2: card2 }, sync_counter: true })
     },
 
     register_task(context, { card, name }) {

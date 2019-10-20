@@ -90,18 +90,17 @@ class CardController extends Controller
      * @param  string $name
      * @return \Illuminate\Http\Response
      */
-    public function destroy(string $name)
+    public function destroy(int $id)
     {
-        $name = urldecode($name);
-        $card = Auth::user()->cards()->onName($name)->first();
-        if($card === null) throw new NoLineException('No card named like that in this board.');
+        $card = Auth::user()->cards()->find($id);
+        if($card === null) throw new NoLineException('No card as asked in this board.');
         $card->remove_card();
         return response()->json();
     }
 
-    public function switch(int $order1, int $order2) {
-        $card1 = Auth::user()->cards()->onOrder($order1)->first();
-        $card2 = Auth::user()->cards()->onOrder($order2)->first();
+    public function switch(int $id1, int $id2) {
+        $card1 = Auth::user()->cards()->find($id1);
+        $card2 = Auth::user()->cards()->find($id2);
         if($card1 === null || $card2 === null) throw new NoLineException('Cards not found.');
         $card1->switch_with($card2);
         return response()->json();

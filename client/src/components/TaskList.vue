@@ -55,7 +55,7 @@
           >Cancel</v-btn>
           <v-btn
             color="error darken-1"
-            @click="delete_card(card.name)"
+            @click="delete_card(card)"
           >Delete</v-btn>
         </v-card-actions>
       </v-card>
@@ -115,8 +115,8 @@ export default {
   components: { TaskCard, NewButtonInput },
 
   methods: {
-    delete_card(name) {
-      this.$store.dispatch("remove_card", name);
+    delete_card(card) {
+      this.$store.dispatch("remove_card", card);
     },
 
     add_task(name) {

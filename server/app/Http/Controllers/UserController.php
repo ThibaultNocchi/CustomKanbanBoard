@@ -91,8 +91,8 @@ class UserController extends Controller
      */
     public function destroy(int $id)
     {
-        $user = Auth::user()->users()->find($id)->first();
-        if($user === null) throw new NoLineException('No user named like that in this board.');
+        $user = Auth::user()->users()->find($id);
+        if($user === null) throw new NoLineException('No user as asked in this board.');
         $user->delete();
         return response()->json();
     }

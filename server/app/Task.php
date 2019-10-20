@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model
 {
-    protected $hidden = ['id', 'card_id', 'created_at', 'updated_at'];
+    protected $hidden = ['card_id', 'created_at', 'updated_at'];
 
     public static function register(Card $c, string $name) {
 
