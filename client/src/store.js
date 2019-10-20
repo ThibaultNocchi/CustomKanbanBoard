@@ -29,6 +29,12 @@ export default new Vuex.Store({
     set_cards(state, val) {
       val.sort((a, b) => { a.order - b.order })
       state.cards = val
+    },
+    increment_syncing(state) {
+      state.syncing++
+    },
+    decrement_syncing(state) {
+      state.syncing--
     }
   },
 
@@ -38,89 +44,65 @@ export default new Vuex.Store({
       context.commit('set_board', null)
     },
 
-    login(context, code) {
-      return context.state.api.login(code)
-        .then(function (r) { return context.state.api.parse_response(r) })
-        .then(function (board) { context.commit('set_board', board) },
+    do_action(context, { api_method, params, commit_to, sync_counter, require_everything }) {
+
+      if (sync_counter) context.commit('increment_syncing')
+
+      let pro = context.state.api[api_method](params)
+        .then(r => { if (sync_counter) context.commit('decrement_syncing'); return context.state.api.parse_response(r) })
+
+      if (commit_to) {
+        pro.then(function (obj) { context.commit(commit_to, obj) },
           function (exc) { console.log(exc); throw exc })
+      } else {
+        pro.catch(exc => { console.log(exc); throw exc })
+      }
+
+      if (require_everything) {
+        pro.then(() => context.dispatch('require_everything'), exc => { console.log(exc); throw exc }).then(() => null, exc => { console.log(exc); throw exc })
+      }
+
+      return pro
+    },
+
+    login(context, code) {
+      return context.dispatch('do_action', { api_method: 'login', params: { code: code }, commit_to: 'set_board' })
     },
 
     register(context, name) {
-      return context.state.api.register(name)
-        .then(function (r) { return context.state.api.parse_response(r) })
-        .then(function (board) { context.commit('set_board', board) },
-          function (exc) { console.log(exc); throw exc })
+      return context.dispatch('do_action', { api_method: 'register', params: { name: name }, commit_to: 'set_board' })
     },
 
     get_users(context) {
-      return context.state.api.get_users(context.state.board)
-        .then(r => (context.state.api.parse_response(r)))
-        .then(users => { context.commit('set_users', users) },
-          exc => { console.log(exc); throw exc })
+      return context.dispatch('do_action', { api_method: 'get_users', params: { board: context.state.board }, commit_to: 'set_users' })
     },
 
     register_user(context, name) {
-      context.state.syncing++
-      return context.state.api.register_user(context.state.board, name)
-        .then(r => {context.state.syncing--; return context.state.api.parse_response(r)})
-        .then(() => { return context.dispatch('require_everything') },
-          exc => { console.log(exc); throw exc })
-        .then(() => null,
-          exc => { console.log(exc); throw exc })
+      return context.dispatch('do_action', { api_method: 'register_user', params: { board: context.state.board, name: name }, sync_counter: true, require_everything: true })
     },
 
     remove_user(context, name) {
-      context.state.syncing++
-      return context.state.api.remove_user(context.state.board, name)
-        .then(r => {context.state.syncing--; return context.state.api.parse_response(r)})
-        .then(() => { return context.dispatch('require_everything') },
-          exc => { console.log(exc); throw exc })
-        .then(() => null,
-          exc => { console.log(exc); throw exc })
+      return context.dispatch('do_action', { api_method: 'remove_user', params: { board: context.state.board, name: name }, sync_counter: true, require_everything: true })
     },
 
     get_cards(context) {
-      return context.state.api.get_cards(context.state.board)
-        .then(r => (context.state.api.parse_response(r)))
-        .then(cards => { context.commit('set_cards', cards) },
-          exc => { console.log(exc); throw exc })
+      return context.dispatch('do_action', { api_method: 'get_cards', params: { board: context.state.board }, commit_to: 'set_cards' })
     },
 
     register_card(context, name) {
-      context.state.syncing++
-      return context.state.api.register_card(context.state.board, name)
-        .then(r => {context.state.syncing--; return context.state.api.parse_response(r)})
-        .then(() => { return context.dispatch('require_everything') },
-          exc => { console.log(exc); throw exc })
-        .then(() => null,
-          exc => { console.log(exc); throw exc })
+      return context.dispatch('do_action', { api_method: 'register_card', params: { board: context.state.board, name: name }, sync_counter: true, require_everything: true })
     },
 
     remove_card(context, name) {
-      context.state.syncing++
-      return context.state.api.remove_card(context.state.board, name)
-        .then(r => {context.state.syncing--; return context.state.api.parse_response(r)})
-        .then(() => { return context.dispatch('require_everything') },
-          exc => { console.log(exc); throw exc })
-        .then(() => null,
-          exc => { console.log(exc); throw exc })
+      return context.dispatch('do_action', { api_method: 'remove_card', params: { board: context.state.board, name: name }, sync_counter: true, require_everything: true })
     },
 
     switch_cards(context, { order1, order2 }) {
-      context.state.syncing++
-      return context.state.api.switch_cards(context.state.board, order1, order2)
-        .then(r => {context.state.syncing--; return context.state.api.parse_response(r)})
-        .catch(exc => { console.log(exc) })
+      return context.dispatch('do_action', { api_method: 'switch_cards', params: { board: context.state.board, order1: order1, order2: order2 }, sync_counter: true })
     },
 
-    register_task(context, {card, name}) {
-      context.state.syncing++
-      return context.state.api.register_task(context.state.board, card, name)
-        .then(r => {context.state.syncing--; return context.state.api.parse_response(r)})
-        .then(() => { return context.dispatch('require_everything') },
-          exc => { console.log(exc); throw exc })
-        .then(() => null,
-          exc => { console.log(exc); throw exc })
+    register_task(context, { card, name }) {
+      return context.dispatch('do_action', { api_method: 'register_task', params: { board: context.state.board, card: card, name: name }, sync_counter: true, require_everything: true })
     },
 
     require_everything(context) {

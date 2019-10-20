@@ -49,49 +49,49 @@ class API {
         }
     }
 
-    login(code) {
+    login({ code }) {
         return fetch(`${this.URL}board/${code}`)
     }
 
-    register(name) {
+    register({ name }) {
         let datas = new FormData()
         datas.append('name', name)
         return fetch(`${this.URL}board`, { method: 'POST', body: datas })
     }
 
-    get_users(board) {
+    get_users({ board }) {
         return fetch(`${this.URL}user`, { headers: { "board": board.code } });
     }
 
-    register_user(board, name) {
+    register_user({ board, name }) {
         let datas = new FormData()
         datas.append('name', name)
         return fetch(`${this.URL}user`, { method: 'POST', body: datas, headers: { "board": board.code } })
     }
 
-    remove_user(board, name) {
+    remove_user({ board, name }) {
         return fetch(`${this.URL}user/${name}`, { method: 'DELETE', headers: { "board": board.code } })
     }
 
-    get_cards(board) {
+    get_cards({ board }) {
         return fetch(`${this.URL}card`, { headers: { "board": board.code } });
     }
 
-    register_card(board, name) {
+    register_card({ board, name }) {
         let datas = new FormData()
         datas.append('name', name)
         return fetch(`${this.URL}card`, { method: 'POST', body: datas, headers: { "board": board.code } })
     }
 
-    remove_card(board, name) {
+    remove_card({ board, name }) {
         return fetch(`${this.URL}card/${name}`, { method: 'DELETE', headers: { "board": board.code } })
     }
 
-    switch_cards(board, order1, order2) {
+    switch_cards({ board, order1, order2 }) {
         return fetch(`${this.URL}card/switch/${order1}/${order2}`, { method: 'PUT', headers: { "board": board.code } })
     }
 
-    register_task(board, card, name) {
+    register_task({ board, card, name }) {
         let datas = new FormData()
         datas.append('name', name)
         return fetch(`${this.URL}card/${card.name}`, { method: 'POST', headers: { "board": board.code }, body: datas })
