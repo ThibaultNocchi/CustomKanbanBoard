@@ -44,6 +44,10 @@ class Board extends Model
         return $this->hasMany('App\Card');
     }
 
+    public function tasks() {
+        return $this->hasManyThrough('App\Task', 'App\Card');
+    }
+
     public function scopeWithCode($query, string $code) {
         return $query->where('code', $code);
     }
