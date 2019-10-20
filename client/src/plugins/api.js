@@ -42,7 +42,7 @@ class API {
             user.response = o
             return user
         }
-        if(type === 'Card') {
+        if (type === 'Card') {
             let card = new Card()
             card.response = o
             return card
@@ -117,7 +117,22 @@ class Card {
     set response(resp) {
         this.name = resp.name
         this.order = resp.order
+        this.tasks = []
+        resp.tasks.forEach(task_o => {
+            let task = new Task()
+            task.response = task_o
+            this.tasks.push(task)
+        });
     }
 }
 
-module.exports = { API, Board, User, Card }
+class Task {
+    constructor() { }
+    set response(resp) {
+        this.name = resp.name
+        this.description = resp.description
+        this.color = resp.color
+    }
+}
+
+module.exports = { API, Board, User, Card, Task }
