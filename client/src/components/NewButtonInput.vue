@@ -27,6 +27,7 @@
           :error-messages="errors"
           ref="input"
           v-model="input_value"
+          :dense="inputDense"
         >
           <template v-slot:append>
             <v-btn
@@ -103,6 +104,11 @@ export default {
       default: false
     },
     'block': {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    'inputDense': {
       type: Boolean,
       required: false,
       default: false

@@ -80,6 +80,7 @@
             iconName="add"
             text
             block
+            inputDense
             :send="add_task"
           ></new-button-input>
         </v-card-text>
