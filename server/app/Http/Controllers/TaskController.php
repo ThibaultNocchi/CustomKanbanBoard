@@ -101,7 +101,7 @@ class TaskController extends Controller
     public function editDescription(int $id, Request $request) {
         $task = Auth::user()->tasks()->find($id);
         if($task === null) throw new NoLineException('No task as asked in board.');
-
+        
         $validator = Validator::make($request->all(), [
             'description' => 'present|string'
         ]);
