@@ -3,7 +3,27 @@
     flat
     outlined
   >
-    <v-card-text class="headline">{{task.name}}</v-card-text>
+    <v-card-text class="headline">
+      <div
+        v-if="!editing_title"
+        @click="edit_title"
+      >{{task.name}}</div>
+      <v-form
+        @submit="save_title"
+        onSubmit="return false"
+        v-else
+      >
+        <v-text-field
+          dense
+          ref="title_input"
+          placeholder="New title"
+          :loading="input_title_loading"
+          :disabled="input_title_disabled"
+          v-model="input_title"
+          @blur="save_title"
+        ></v-text-field>
+      </v-form>
+    </v-card-text>
     <v-card-text>
 
       <div
@@ -45,7 +65,12 @@ export default {
       editing_desc: false,
       input_desc: null,
       input_description_loading: false,
-      input_description_disabled: false
+      input_description_disabled: false,
+
+      editing_title: false,
+      input_title: null,
+      input_title_loading: false,
+      input_title_disabled: false
     };
   },
   methods: {
@@ -58,6 +83,18 @@ export default {
         });
       }, 200).then(() => {
         this.$refs.desc_input.focus();
+      });
+    },
+
+    edit_title() {
+      this.editing_title = true;
+      this.input_title = this.task.name;
+      new Promise(resolve => {
+        setTimeout(() => {
+          resolve();
+        });
+      }, 200).then(() => {
+        this.$refs.title_input.focus();
       });
     },
 
@@ -74,7 +111,23 @@ export default {
           this.input_description_disabled = false;
           this.editing_desc = false;
         });
+    },
+
+    save_title() {
+      this.input_title_loading = true;
+      this.input_title_disabled = true;
+      this.$store
+        .dispatch("edit_name_task", {
+          task: this.task,
+          name: this.input_title
+        })
+        .finally(() => {
+          this.input_title_loading = false;
+          this.input_title_disabled = false;
+          this.editing_title = false;
+        });
     }
+
   }
 };
 </script>

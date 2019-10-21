@@ -43,12 +43,12 @@ class TaskController extends Controller
             'name' => 'required|string|max:128',
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             throw new ValidationFailedException('', $validator->errors());
         }
 
         $card = Auth::user()->cards()->find($card_id);
-        if($card === null) throw new NoLineException('No card found.');
+        if ($card === null) throw new NoLineException('No card found.');
 
         return response()->json(Task::register($card, urldecode($request->name)));
     }
@@ -98,23 +98,31 @@ class TaskController extends Controller
         //
     }
 
-    public function editDescription(int $id, Request $request) {
+    public function editTask(int $id, Request $request)
+    {
         $task = Auth::user()->tasks()->find($id);
-        if($task === null) throw new NoLineException('No task as asked in board.');
-        
+        if ($task === null) throw new NoLineException('No task as asked in board.');
+
         $validator = Validator::make($request->all(), [
-            'description' => 'present|string'
+            'description' => 'string',
+            'name' => 'string'
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             throw new ValidationFailedException('', $validator->errors());
         }
-        
-        if($request->description !== "") $task->description = $request->description;
-        else $task->description = null;
+
+        if ($request->has('description')) {
+            if ($request->description !== "") $task->description = $request->description;
+            else $task->description = null;
+        }
+
+        if($request->has('name')) {
+            $task->name = $request->name;
+        }
+
         $task->save();
 
         return response()->json($task);
     }
-
 }

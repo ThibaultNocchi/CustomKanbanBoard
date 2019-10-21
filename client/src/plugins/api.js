@@ -104,6 +104,13 @@ class API {
         return fetch(`${this.URL}task/${task.id}`, { method: 'POST', headers: { "board": board.code }, body: datas })
     }
 
+    edit_name_task({ board, task, name }) {
+        let datas = new FormData()
+        datas.append('name', name)
+        datas.append('_method', 'PUT')
+        return fetch(`${this.URL}task/${task.id}`, { method: 'POST', headers: { "board": board.code }, body: datas })
+    }
+
 }
 
 class Board {
