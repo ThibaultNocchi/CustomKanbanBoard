@@ -2,7 +2,7 @@
   <v-card
     flat
     outlined
-    :color="task.color ? `${task.color} lighten-3` : ''"
+    :color="color_to_use ? `${color_to_use}` : ''"
   >
 
     <v-card-text class="pa-3 body-2 font-weight-regular">
@@ -36,6 +36,7 @@
               class="body-2"
             >
               <v-list-item-group>
+
                 <v-list-item @click="dialog_delete = true">
                   <v-list-item-icon class="mr-2">
                     <v-icon
@@ -47,6 +48,19 @@
                     Delete this task
                   </v-list-item-content>
                 </v-list-item>
+
+                <v-list-item @click="dialog_color = true">
+                  <v-list-item-icon class="mr-2">
+                    <v-icon
+                      dense
+                      color="primary"
+                    >color_lens</v-icon>
+                  </v-list-item-icon>
+                  <v-list-item-content class="primary--text">
+                    Set color
+                  </v-list-item-content>
+                </v-list-item>
+
               </v-list-item-group>
             </v-list>
           </v-menu>
@@ -129,12 +143,43 @@
       </v-row>
 
     </v-card-text>
+
+    <v-overlay
+      absolute
+      opacity="0.3"
+      :value="dialog_color"
+    >
+      <v-row>
+        <v-col class="d-flex align-center">
+          <swatches v-model="custom_color" colors="material-light" />
+        </v-col>
+        <v-col class="d-flex align-center"><v-btn icon color="success" @click="save_color"><v-icon>done</v-icon></v-btn></v-col>
+        <v-col class="d-flex align-center">
+          <v-btn
+            icon
+            color="error"
+            @click="dialog_color = false"
+          >
+            <v-icon>close</v-icon>
+          </v-btn>
+        </v-col>
+      </v-row>
+    </v-overlay>
+
   </v-card>
 </template>
 
 <script>
+import swatches from "vue-swatches";
+import "vue-swatches/dist/vue-swatches.min.css";
 export default {
   props: ["task"],
+  components: { swatches },
+  computed: {
+    color_to_use() {
+      return this.custom_color || this.task.color
+    }
+  },
   data() {
     return {
       editing_desc: false,
@@ -147,7 +192,10 @@ export default {
       input_title_loading: false,
       input_title_disabled: false,
 
-      dialog_delete: false
+      dialog_delete: false,
+      dialog_color: false,
+
+      custom_color: null
     };
   },
   methods: {
@@ -207,7 +255,14 @@ export default {
 
     delete_task() {
       this.$store.dispatch("remove_task", { task: this.task });
+    },
+
+    save_color() {
+      alert(this.custom_color)
+      this.dialog_color = false
+      this.custom_color = null
     }
+
   }
 };
 </script>

@@ -10,6 +10,7 @@
   "dependencies": {
     "vue": "^2.6.10",
     "vue-router": "^3.0.3",
+    "vue-swatches": "^1.0.4",
     "vuedraggable": "^2.23.2",
     "vuetify": "^2.1.6",
     "vuex": "^3.0.1"
