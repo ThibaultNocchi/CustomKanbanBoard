@@ -12,13 +12,66 @@
           @click="edit_title"
           class="py-0 font-weight-bold align-center d-flex"
         >{{task.name}}</v-col>
+
         <v-col class="py-0 text-right">
-          <v-btn
-            icon
-            x-small
+
+          <v-menu
+            open-on-click
+            close-on-content-click
+            bottom
+            offset-y
+            transition="slide-y-transition"
           >
-            <v-icon>more_vert</v-icon>
-          </v-btn>
+            <template v-slot:activator="{on}">
+              <v-btn
+                icon
+                x-small
+                v-on="on"
+              >
+                <v-icon>more_vert</v-icon>
+              </v-btn>
+            </template>
+            <v-list
+              dense
+              class="body-2"
+            >
+              <v-list-item-group>
+                <v-list-item @click="dialog_delete = true">
+                  <v-list-item-icon class="mr-2">
+                    <v-icon
+                      dense
+                      color="error darken-1"
+                    >delete</v-icon>
+                  </v-list-item-icon>
+                  <v-list-item-content class="error--text text--darken-1">
+                    Delete this task
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list-item-group>
+            </v-list>
+          </v-menu>
+
+          <v-dialog
+            max-width="500"
+            v-model="dialog_delete"
+          >
+            <v-card>
+              <v-card-title class="headline">Deleting task confirmation</v-card-title>
+              <v-card-text>You are going to delete the "{{task.name}}" task. Are you sure?</v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn
+                  text
+                  @click="dialog_delete = false"
+                >Cancel</v-btn>
+                <v-btn
+                  color="error darken-1"
+                  @click="delete_task()"
+                >Delete</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+
         </v-col>
       </v-row>
 
@@ -92,7 +145,9 @@ export default {
       editing_title: false,
       input_title: null,
       input_title_loading: false,
-      input_title_disabled: false
+      input_title_disabled: false,
+
+      dialog_delete: false
     };
   },
   methods: {
@@ -148,7 +203,12 @@ export default {
           this.input_title_disabled = false;
           this.editing_title = false;
         });
+    },
+
+    delete_task(){
+      // this.$store.
     }
+
   }
 };
 </script>
