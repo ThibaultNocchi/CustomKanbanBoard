@@ -34,4 +34,5 @@ $router->group(['prefix' => 'card', 'middleware' => 'auth'], function () use($ro
 $router->group(['prefix' => 'task', 'middleware' => 'auth'], function () use($router) {
     $router->put('{id:[0-9]+}', ['uses' => 'TaskController@editDescription']);
     $router->put('{id:[0-9]+}', ['uses' => 'TaskController@editTask']);
+    $router->delete('{id:[0-9]+}', ['uses' => 'TaskController@destroy']);
 });

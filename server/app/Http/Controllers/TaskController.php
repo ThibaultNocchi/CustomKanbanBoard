@@ -95,7 +95,10 @@ class TaskController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $task = Auth::user()->tasks()->find($id);
+        if($task === null) throw new NoLineException('No task as asked in this board.');
+        $task->remove_task();
+        return response()->json();
     }
 
     public function editTask(int $id, Request $request)

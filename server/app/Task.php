@@ -20,11 +20,22 @@ class Task extends Model
 
     }
 
+    public function remove_task() {
+        $order = $this->order;
+        $card = $this->card;
+        $this->delete();
+        $card->tasks()->afterOrder($order)->decrement('order');
+    }
+
     public function card(){
         return $this->belongsTo('App\Card');
     }
 
     public function scopeOrdered($query) {
         return $query->orderBy('order');
+    }
+
+    public function scopeAfterOrder($query, int $order) {
+        return $query->where('order', '>', $order);
     }
 }
