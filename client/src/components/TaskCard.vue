@@ -2,6 +2,7 @@
   <v-card
     flat
     outlined
+    color="green lighten-3"
   >
 
     <v-card-text class="pa-3">
@@ -39,6 +40,8 @@
           </v-form>
         </v-col>
       </v-row>
+
+      <v-divider class="mt-2 mb-1"></v-divider>
 
       <v-row v-if="!editing_desc">
         <v-col
