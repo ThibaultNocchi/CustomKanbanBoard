@@ -106,11 +106,15 @@ export default new Vuex.Store({
     },
 
     edit_description_task(context, { task, description }) {
-      return context.dispatch('do_action', { api_method: 'edit_description_task', params: { board: context.state.board, task: task, description: description }, sync_counter: true, require_everything: true })
+      if (task.description !== description) {
+        return context.dispatch('do_action', { api_method: 'edit_description_task', params: { board: context.state.board, task: task, description: description }, sync_counter: true, require_everything: true })
+      }
     },
 
     edit_name_task(context, { task, name }) {
-      return context.dispatch('do_action', { api_method: 'edit_name_task', params: { board: context.state.board, task: task, name: name }, sync_counter: true, require_everything: true })
+      if (task.name !== name) {
+        return context.dispatch('do_action', { api_method: 'edit_name_task', params: { board: context.state.board, task: task, name: name }, sync_counter: true, require_everything: true })
+      }
     },
 
     require_everything(context) {
