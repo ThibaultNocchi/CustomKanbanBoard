@@ -111,6 +111,10 @@ class API {
         return fetch(`${this.URL}task/${task.id}`, { method: 'POST', headers: { "board": board.code }, body: datas })
     }
 
+    remove_task({ board, task }) {
+        return fetch(`${this.URL}task/${task.id}`, { method: 'DELETE', headers: { 'board': board.code } })
+    }
+
 }
 
 class Board {

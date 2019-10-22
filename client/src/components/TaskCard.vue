@@ -205,10 +205,9 @@ export default {
         });
     },
 
-    delete_task(){
-      // this.$store.
+    delete_task() {
+      this.$store.dispatch("remove_task", { task: this.task });
     }
-
   }
 };
 </script>
