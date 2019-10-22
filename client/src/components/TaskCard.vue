@@ -2,10 +2,10 @@
   <v-card
     flat
     outlined
-    color="green lighten-3"
+    :color="task.color ? `${task.color} lighten-3` : ''"
   >
 
-    <v-card-text class="pa-3">
+    <v-card-text class="pa-3 body-2 font-weight-regular">
 
       <v-row v-if="!editing_title">
         <v-col
