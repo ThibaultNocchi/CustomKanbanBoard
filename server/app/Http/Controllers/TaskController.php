@@ -108,7 +108,8 @@ class TaskController extends Controller
 
         $validator = Validator::make($request->all(), [
             'description' => 'string',
-            'name' => 'string'
+            'name' => 'string',
+            'color' => 'string|size:6'
         ]);
 
         if ($validator->fails()) {
@@ -122,6 +123,10 @@ class TaskController extends Controller
 
         if($request->has('name')) {
             $task->name = $request->name;
+        }
+
+        if($request->has('color')) {
+            $task->color = $request->color;
         }
 
         $task->save();
