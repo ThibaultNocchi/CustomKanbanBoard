@@ -3,56 +3,74 @@
     flat
     outlined
   >
-    <v-card-text class="headline">
-      <div
-        v-if="!editing_title"
-        @click="edit_title"
-      >{{task.name}}</div>
-      <v-form
-        @submit="save_title"
-        onSubmit="return false"
-        v-else
-      >
-        <v-text-field
-          dense
-          ref="title_input"
-          placeholder="New title"
-          :loading="input_title_loading"
-          :disabled="input_title_disabled"
-          v-model="input_title"
-          @blur="save_title"
-        ></v-text-field>
-      </v-form>
-    </v-card-text>
-    <v-divider></v-divider>
-    <v-card-text>
 
-      <div
-        v-if="!editing_desc"
-        @click="edit_desc"
-      >
-        <span v-if="task.description">{{task.description}}</span>
-        <span
-          v-else
-          class="font-italic"
-        >No description given.</span>
-      </div>
+    <v-card-text class="pa-3">
 
-      <v-form
-        @submit="save_desc"
-        onSubmit="return false"
-        v-else
-      >
-        <v-text-field
-          dense
-          ref="desc_input"
-          placeholder="New description"
-          :loading="input_description_loading"
-          :disabled="input_description_disabled"
-          v-model="input_desc"
-          @blur="save_desc"
-        ></v-text-field>
-      </v-form>
+      <v-row v-if="!editing_title">
+        <v-col
+          @click="edit_title"
+          class="py-0 font-weight-bold align-center d-flex"
+        >{{task.name}}</v-col>
+        <v-col class="py-0 text-right">
+          <v-btn
+            icon
+            x-small
+          >
+            <v-icon>more_vert</v-icon>
+          </v-btn>
+        </v-col>
+      </v-row>
+
+      <v-row v-else>
+        <v-col class="py-0">
+          <v-form
+            @submit="save_title"
+            onSubmit="return false"
+          >
+            <v-text-field
+              dense
+              ref="title_input"
+              placeholder="New title"
+              :loading="input_title_loading"
+              :disabled="input_title_disabled"
+              v-model="input_title"
+              @blur="save_title"
+            ></v-text-field>
+          </v-form>
+        </v-col>
+      </v-row>
+
+      <v-row v-if="!editing_desc">
+        <v-col
+          class="pb-0 pt-1"
+          @click="edit_desc"
+        >
+          <span v-if="task.description">{{task.description}}</span>
+          <span
+            v-else
+            class="font-italic"
+          >No description given.</span>
+        </v-col>
+      </v-row>
+
+      <v-row v-else>
+        <v-col class="pb-0 pt-1">
+          <v-form
+            @submit="save_desc"
+            onSubmit="return false"
+          >
+            <v-text-field
+              dense
+              ref="desc_input"
+              placeholder="New description"
+              :loading="input_description_loading"
+              :disabled="input_description_disabled"
+              v-model="input_desc"
+              @blur="save_desc"
+            ></v-text-field>
+          </v-form>
+        </v-col>
+      </v-row>
 
     </v-card-text>
   </v-card>
@@ -128,7 +146,6 @@ export default {
           this.editing_title = false;
         });
     }
-
   }
 };
 </script>

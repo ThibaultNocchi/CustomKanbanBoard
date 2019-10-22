@@ -15,7 +15,7 @@
             icon
             v-on="on"
           >
-            <v-icon>arrow_drop_down</v-icon>
+            <v-icon>more_vert</v-icon>
           </v-btn>
         </v-card-title>
       </template>
