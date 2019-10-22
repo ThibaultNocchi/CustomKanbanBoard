@@ -108,17 +108,30 @@
 
       <template v-slot:append>
 
-        <v-list
-          nav
-        >
+        <v-list nav>
           <v-list-item>
             <v-list-item-icon>
-              <v-icon color="success darken-2" v-if="!$store.state.syncing">done</v-icon>
-              <v-progress-circular indeterminate color="warning darken-2" size="20" width="2" v-if="$store.state.syncing"></v-progress-circular>
+              <v-icon
+                color="success darken-2"
+                v-if="!$store.state.syncing"
+              >done</v-icon>
+              <v-progress-circular
+                indeterminate
+                color="warning darken-2"
+                size="20"
+                width="2"
+                v-if="$store.state.syncing"
+              ></v-progress-circular>
             </v-list-item-icon>
             <v-list-item-content>
-              <v-list-item-title class="success--text text--darken-2" v-if="!$store.state.syncing">Synced!</v-list-item-title>
-              <v-list-item-title class="warning--text text--darken-2" v-if="$store.state.syncing">Syncing...</v-list-item-title>
+              <v-list-item-title
+                class="success--text text--darken-2"
+                v-if="!$store.state.syncing"
+              >Synced!</v-list-item-title>
+              <v-list-item-title
+                class="warning--text text--darken-2"
+                v-if="$store.state.syncing"
+              >Syncing...</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list>
@@ -126,6 +139,16 @@
         <div class="pa-2">
           <v-btn
             block
+            color="primary lighten-1"
+            @click="refresh"
+            :loading="refreshing"
+          >Refresh</v-btn>
+        </div>
+
+        <div class="pa-2">
+          <v-btn
+            block
+            color="error lighten-1"
             @click="logout"
           >Logout</v-btn>
         </div>
@@ -160,7 +183,8 @@ export default {
     return {
       drawer: null,
       snackbar_copy_success: false,
-      snackbar_copy_error: false
+      snackbar_copy_error: false,
+      refreshing: false
     };
   },
 
@@ -173,6 +197,13 @@ export default {
   methods: {
     logout() {
       this.$router.push({ name: "login" });
+    },
+
+    refresh() {
+      this.refreshing = true;
+      this.$store
+        .dispatch("require_everything")
+        .finally(() => (this.refreshing = false));
     },
 
     copy_code() {
