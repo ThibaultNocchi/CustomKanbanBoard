@@ -111,6 +111,13 @@ class API {
         return fetch(`${this.URL}task/${task.id}`, { method: 'POST', headers: { "board": board.code }, body: datas })
     }
 
+    edit_color_task({ board, task, color }) {
+        let datas = new FormData()
+        datas.append('color', color)
+        datas.append('_method', 'PUT')
+        return fetch(`${this.URL}task/${task.id}`, { method: 'POST', headers: { "board": board.code }, body: datas })
+    }
+
     remove_task({ board, task }) {
         return fetch(`${this.URL}task/${task.id}`, { method: 'DELETE', headers: { 'board': board.code } })
     }

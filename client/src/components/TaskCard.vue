@@ -146,14 +146,25 @@
 
     <v-overlay
       absolute
-      opacity="0.3"
+      opacity="0.5"
       :value="dialog_color"
     >
       <v-row>
         <v-col class="d-flex align-center">
-          <swatches v-model="custom_color" colors="material-light" />
+          <swatches
+            v-model="custom_color"
+            colors="material-light"
+          />
         </v-col>
-        <v-col class="d-flex align-center"><v-btn icon color="success" @click="save_color"><v-icon>done</v-icon></v-btn></v-col>
+        <v-col class="d-flex align-center">
+          <v-btn
+            icon
+            color="success"
+            @click="save_color"
+          >
+            <v-icon>done</v-icon>
+          </v-btn>
+        </v-col>
         <v-col class="d-flex align-center">
           <v-btn
             icon
@@ -177,7 +188,7 @@ export default {
   components: { swatches },
   computed: {
     color_to_use() {
-      return this.custom_color || this.task.color
+      return this.custom_color || `#${this.task.color}`;
     }
   },
   data() {
@@ -258,11 +269,19 @@ export default {
     },
 
     save_color() {
-      alert(this.custom_color)
-      this.dialog_color = false
-      this.custom_color = null
+      let color_to_send = this.custom_color.replace("#", "");
+      this.dialog_color = false;
+      this.$store
+        .dispatch("edit_color_task", { task: this.task, color: color_to_send })
+        .finally(() => {
+          return new Promise(resolve => {
+            setTimeout(() => {
+              resolve();
+            }, 200);
+          });
+        })
+        .then(() => (this.custom_color = null));
     }
-
   }
 };
 </script>
