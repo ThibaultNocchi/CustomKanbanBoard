@@ -9,7 +9,7 @@
       transition="slide-y-transition"
     >
       <template v-slot:activator="{on}">
-        <v-card-title :class="{draggable_ptn}">{{card.name}}
+        <v-card-title :class="{draggable_ptn}" class="pa-3">{{card.name}}
           <v-spacer></v-spacer>
           <v-btn
             icon
@@ -63,7 +63,7 @@
 
     <v-divider></v-divider>
 
-    <v-card-text>
+    <v-card-text class="pa-2">
 
       <task-card
         class="ma-1"
