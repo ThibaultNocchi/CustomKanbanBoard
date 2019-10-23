@@ -28,6 +28,7 @@
           ref="input"
           v-model="input_value"
           :dense="inputDense"
+          @blur="clear"
         >
           <template v-slot:append>
             <v-btn
