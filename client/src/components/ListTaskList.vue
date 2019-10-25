@@ -1,38 +1,31 @@
 <template>
 
   <draggable
+    class="scrolling-wrapper-flexbox"
     v-model="cards_list"
-    class="row"
     draggable=".card-item"
     @change="cards_switched"
   >
 
-    <v-col
-      cols="12"
-      sm="6"
+    <task-list
+      draggable_ptn
       v-for="card in cards_list"
-      :key="card.name"
-      class="card-item"
-    >
-      <task-list draggable_ptn :card="card"></task-list>
-    </v-col>
+      :key="card.id"
+      :card="card"
+      class="card-item ma-2"
+      :style="{width: '300px'}"
+    ></task-list>
 
-    <v-col
-      class="d-flex align-center justify-center"
-      cols="12"
-      sm="6"
-      slot="footer"
-    >
-      <new-button-input
-        txt-btn="New card"
-        txt-placeholder="Name"
-        txt-hint="New card name."
-        txt-error="Card already exists."
-        :send="submit_card"
-        large
-        outlined
-      ></new-button-input>
-    </v-col>
+    <new-button-input
+      txt-btn="New card"
+      txt-placeholder="Name"
+      txt-hint="New card name."
+      txt-error="Card already exists."
+      :send="submit_card"
+      large
+      outlined
+      class="card-item ma-2"
+    ></new-button-input>
 
   </draggable>
 
@@ -73,3 +66,14 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.scrolling-wrapper-flexbox {
+  display: flex;
+  flex-wrap: nowrap;
+
+  .card-item {
+    flex: 0 0 auto;
+  }
+}
+</style>

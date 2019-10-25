@@ -1,5 +1,5 @@
 <template>
-  <default-view>
+  <default-view class="overflowed">
     <list-task-list></list-task-list>
   </default-view>
 </template>
@@ -12,3 +12,10 @@ export default {
   components: { DefaultView, ListTaskList }
 };
 </script>
+
+<style lang="scss">
+.overflowed {
+  overflow-x: auto;
+
+}
+</style>
