@@ -129,15 +129,27 @@
             @submit="save_desc"
             onSubmit="return false"
           >
-            <v-text-field
-              dense
+            <v-textarea
+              auto-grow
+              rows="1"
               ref="desc_input"
               placeholder="New description"
               :loading="input_description_loading"
-              :disabled="input_description_disabled"
+              :disabled="input_description_loading"
               v-model="input_desc"
               @blur="save_desc"
-            ></v-text-field>
+            >
+              <template v-slot:append>
+                <v-btn
+                  icon
+                  color="primary"
+                  :disabled="input_description_loading"
+                  @click="save_desc"
+                >
+                  <v-icon>send</v-icon>
+                </v-btn>
+              </template>
+            </v-textarea>
           </v-form>
         </v-col>
       </v-row>
@@ -196,7 +208,6 @@ export default {
       editing_desc: false,
       input_desc: null,
       input_description_loading: false,
-      input_description_disabled: false,
 
       editing_title: false,
       input_title: null,
@@ -236,7 +247,6 @@ export default {
 
     save_desc() {
       this.input_description_loading = true;
-      this.input_description_disabled = true;
       this.$store
         .dispatch("edit_description_task", {
           task: this.task,
@@ -244,7 +254,6 @@ export default {
         })
         .finally(() => {
           this.input_description_loading = false;
-          this.input_description_disabled = false;
           this.editing_desc = false;
         });
     },
