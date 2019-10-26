@@ -48,7 +48,7 @@ export default {
     cards_switched(type) {
       if ("moved" in type) {
         this.$store.dispatch("switch_cards", {
-          card: this.$store.state.cards[type.moved.newIndex],
+          card: type.moved.element,
           newIndex: type.moved.newIndex
         });
       }
