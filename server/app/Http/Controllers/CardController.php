@@ -98,11 +98,10 @@ class CardController extends Controller
         return response()->json();
     }
 
-    public function switch(int $id1, int $id2) {
+    public function switch(int $id1, int $order) {
         $card1 = Auth::user()->cards()->find($id1);
-        $card2 = Auth::user()->cards()->find($id2);
-        if($card1 === null || $card2 === null) throw new NoLineException('Cards not found.');
-        $card1->switch_with($card2);
+        if($card1 === null) throw new NoLineException('Cards not found.');
+        $card1->switch_to($order);
         return response()->json();
     }
 }

@@ -87,8 +87,8 @@ class API {
         return fetch(`${this.URL}card/${card.id}`, { method: 'DELETE', headers: { "board": board.code } })
     }
 
-    switch_cards({ board, card1, card2 }) {
-        return fetch(`${this.URL}card/${card1.id}/switch_to/${card2.id}`, { method: 'PUT', headers: { "board": board.code } })
+    switch_cards({ board, card, newIndex }) {
+        return fetch(`${this.URL}card/${card.id}/switch_to/${newIndex}`, { method: 'PUT', headers: { "board": board.code } })
     }
 
     register_task({ board, card, name }) {
