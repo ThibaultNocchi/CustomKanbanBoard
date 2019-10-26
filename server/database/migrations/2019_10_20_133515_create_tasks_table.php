@@ -17,7 +17,7 @@ class CreateTasksTable extends Migration
             $table->bigIncrements('id');
             $table->string('name', 128);
             $table->text('description')->nullable();
-            $table->string('color', 6)->nullable();
+            $table->string('color', 16)->nullable();
             $table->unsignedInteger('order');
             $table->unsignedBigInteger('card_id');
             $table->timestamps();

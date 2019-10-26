@@ -1,3 +1,5 @@
+import colors from '@/plugins/colors.js'
+
 class API {
 
     constructor(url) {
@@ -97,7 +99,7 @@ class API {
         return fetch(`${this.URL}card/${card.id}`, { method: 'POST', headers: { "board": board.code }, body: datas })
     }
 
-    edit_name_card({board, card, name}) {
+    edit_name_card({ board, card, name }) {
         let datas = new FormData()
         datas.append('name', name)
         datas.append('_method', 'PUT')
@@ -119,10 +121,15 @@ class API {
     }
 
     edit_color_task({ board, task, color }) {
-        let datas = new FormData()
-        datas.append('color', color)
-        datas.append('_method', 'PUT')
-        return fetch(`${this.URL}task/${task.id}`, { method: 'POST', headers: { "board": board.code }, body: datas })
+        let color_to_send = colors.colors_inverted[color]
+        if (color_to_send !== undefined) {
+            let datas = new FormData()
+            datas.append('color', color_to_send)
+            datas.append('_method', 'PUT')
+            return fetch(`${this.URL}task/${task.id}`, { method: 'POST', headers: { "board": board.code }, body: datas })
+        } else {
+            return new Promise((resolve, reject) => { reject() })
+        }
     }
 
     remove_task({ board, task }) {
@@ -168,6 +175,12 @@ class Card {
 
 class Task {
     constructor() { }
+    get color() {
+        return this._color
+    }
+    set color(val) {
+        this._color = colors.colors[val]
+    }
     set response(resp) {
         this.id = resp.id
         this.name = resp.name
@@ -176,4 +189,4 @@ class Task {
     }
 }
 
-module.exports = { API, Board, User, Card, Task }
+export default { API, Board, User, Card, Task, colors }

@@ -16,7 +16,9 @@ export default new Vuex.Store({
     board: null,
     users: [],
 
-    cards: []
+    cards: [],
+
+    task_colors: api.colors.colors,
   },
 
   mutations: {

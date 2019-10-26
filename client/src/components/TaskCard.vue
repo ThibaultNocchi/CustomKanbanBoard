@@ -165,7 +165,7 @@
         <v-col class="d-flex align-center">
           <swatches
             v-model="custom_color"
-            colors="material-light"
+            :colors="Object.values($store.state.task_colors)"
           />
         </v-col>
         <v-col class="d-flex align-center">
@@ -200,7 +200,7 @@ export default {
   components: { swatches },
   computed: {
     color_to_use() {
-      return this.custom_color || `#${this.task.color}`;
+      return this.custom_color || this.task.color;
     },
     parsed_description () {
       return this.task.description.replace(/(?:\r\n|\r|\n)/g, '<br />');
@@ -281,10 +281,9 @@ export default {
     },
 
     save_color() {
-      let color_to_send = this.custom_color.replace("#", "");
       this.dialog_color = false;
       this.$store
-        .dispatch("edit_color_task", { task: this.task, color: color_to_send })
+        .dispatch("edit_color_task", { task: this.task, color: this.custom_color })
         .finally(() => {
           return new Promise(resolve => {
             setTimeout(() => {
