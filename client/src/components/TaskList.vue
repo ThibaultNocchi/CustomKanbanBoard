@@ -9,9 +9,16 @@
       transition="slide-y-transition"
     >
       <template v-slot:activator="{on}">
-        <v-card-title class="pa-3">{{card.name}}
+
+        <v-card-title
+          v-if="!editing_title"
+          class="pa-3"
+        ><span @click="edit_title">{{card.name}}</span>
           <v-spacer></v-spacer>
-          <v-icon v-if="draggable_bool" class="drag_handle">drag_indicator</v-icon>
+          <v-icon
+            v-if="draggable_bool"
+            class="drag_handle"
+          >drag_indicator</v-icon>
           <v-btn
             icon
             v-on="on"
@@ -19,6 +26,24 @@
             <v-icon>more_vert</v-icon>
           </v-btn>
         </v-card-title>
+
+        <v-card-title v-else>
+          <v-form
+            @submit="save_title"
+            onSubmit="return false"
+          >
+            <v-text-field
+              dense
+              ref="title_input"
+              placeholder="New title"
+              :loading="input_title_loading"
+              :disabled="input_title_disabled"
+              v-model="input_title"
+              @blur="save_title"
+            ></v-text-field>
+          </v-form>
+        </v-card-title>
+
       </template>
 
       <v-list dense>
@@ -100,7 +125,12 @@ import NewButtonInput from "@/components/NewButtonInput.vue";
 export default {
   data() {
     return {
-      dialog_delete: false
+      dialog_delete: false,
+
+      input_title: null,
+      editing_title: false,
+      input_title_loading: false,
+      input_title_disabled: false
     };
   },
 
@@ -121,7 +151,37 @@ export default {
     },
 
     add_task(name) {
-      return this.$store.dispatch("register_task", { card: this.card, name: name });
+      return this.$store.dispatch("register_task", {
+        card: this.card,
+        name: name
+      });
+    },
+
+    edit_title() {
+      this.editing_title = true;
+      this.input_title = this.card.name;
+      new Promise(resolve => {
+        setTimeout(() => {
+          resolve();
+        });
+      }, 200).then(() => {
+        this.$refs.title_input.focus();
+      });
+    },
+
+    save_title() {
+      this.input_title_loading = true;
+      this.input_title_disabled = true;
+      // this.$store
+      //   .dispatch("edit_name_task", {
+      //     task: this.task,
+      //     name: this.input_title
+      //   })
+      //   .finally(() => {
+      //     this.input_title_loading = false;
+      //     this.input_title_disabled = false;
+      //     this.editing_title = false;
+      //   });
     }
   }
 };
