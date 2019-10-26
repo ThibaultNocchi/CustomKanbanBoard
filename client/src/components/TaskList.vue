@@ -91,12 +91,22 @@
 
     <v-card-text class="pa-2">
 
-      <task-card
-        class="ma-1"
-        v-for="(task, idx) in card.tasks"
-        :key="idx"
-        :task="task"
-      ></task-card>
+      <draggable
+        v-model="card.tasks"
+        group="tasks"
+        handle=".draggable_handle"
+      >
+
+        <task-card
+          draggable_bool
+          class="ma-1"
+          v-for="(task, idx) in card.tasks"
+          :key="idx"
+          :task="task"
+        ></task-card>
+
+      </draggable>
+
       <v-card flat>
         <v-card-text>
           <new-button-input
@@ -121,6 +131,7 @@
 <script>
 import TaskCard from "@/components/TaskCard.vue";
 import NewButtonInput from "@/components/NewButtonInput.vue";
+import Draggable from "vuedraggable";
 
 export default {
   data() {
@@ -143,7 +154,7 @@ export default {
     }
   },
 
-  components: { TaskCard, NewButtonInput },
+  components: { TaskCard, NewButtonInput, Draggable },
 
   methods: {
     delete_card() {

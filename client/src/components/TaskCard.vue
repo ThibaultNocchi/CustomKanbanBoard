@@ -15,6 +15,8 @@
 
         <v-col class="py-0 text-right">
 
+          <v-icon v-if="draggable_bool" small class="draggable_handle">drag_indicator</v-icon>
+
           <v-menu
             open-on-click
             close-on-content-click
@@ -199,7 +201,14 @@
 import swatches from "vue-swatches";
 import "vue-swatches/dist/vue-swatches.min.css";
 export default {
-  props: ["task"],
+  props: {
+    task: Object,
+    draggable_bool: {
+      type: Boolean,
+      required: false,
+      default: false
+    }
+  },
   components: { swatches },
   computed: {
     color_to_use() {
@@ -303,3 +312,9 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.draggable_handle {
+  cursor: grab;
+}
+</style>
