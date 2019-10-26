@@ -79,9 +79,26 @@ class CardController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id)
     {
-        //
+        $card = Auth::user()->cards()->find($id);
+        if ($card === null) throw new NoLineException('No card as asked in board.');
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'sometimes|required|string',
+        ]);
+
+        if ($validator->fails()) {
+            throw new ValidationFailedException('', $validator->errors());
+        }
+
+        if($request->has('name')) {
+            $card->name = $request->name;
+        }
+
+        $card->save();
+
+        return response()->json($card);
     }
 
     /**
