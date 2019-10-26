@@ -109,7 +109,7 @@ class TaskController extends Controller
         $validator = Validator::make($request->all(), [
             'description' => 'string',
             'name' => 'sometimes|required|string',
-            'color' => 'string|size:6'
+            'color' => 'string'
         ]);
 
         if ($validator->fails()) {

@@ -284,6 +284,7 @@ export default {
       this.dialog_color = false;
       this.$store
         .dispatch("edit_color_task", { task: this.task, color: this.custom_color })
+        .catch(() => {})
         .finally(() => {
           return new Promise(resolve => {
             setTimeout(() => {
