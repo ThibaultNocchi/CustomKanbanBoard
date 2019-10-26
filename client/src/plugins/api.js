@@ -136,6 +136,13 @@ class API {
         return fetch(`${this.URL}task/${task.id}`, { method: 'DELETE', headers: { 'board': board.code } })
     }
 
+    switch_tasks({ board, task, newIndex }) {
+        let datas = new FormData()
+        datas.append('order', newIndex)
+        datas.append('_method', 'PUT')
+        return fetch(`${this.URL}task/${task.id}/switch_to`, { method: 'POST', headers: { "board": board.code }, body: datas })
+    }
+
 }
 
 class Board {

@@ -160,11 +160,17 @@ export default {
   methods: {
     switch_task(type) {
       if ("moved" in type) {
-        console.log(`moved next task to ${type.moved.newIndex}`)
-        console.log(type.moved.element)
+        // console.log(`moved next task to ${type.moved.newIndex}`);
+        // console.log(type.moved.element);
+        this.$store.dispatch("switch_tasks", {
+          task: type.moved.element,
+          newIndex: type.moved.newIndex
+        });
       } else if ("added" in type) {
-        console.log(`moved next task to ${type.added.newIndex} in card ${this.card.id}`)        
-        console.log(type.added.element)
+        console.log(
+          `moved next task to ${type.added.newIndex} in card ${this.card.id}`
+        );
+        console.log(type.added.element);
       }
     },
 

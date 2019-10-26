@@ -132,6 +132,10 @@ export default new Vuex.Store({
       return context.dispatch('do_action', { api_method: 'remove_task', params: { board: context.state.board, task: task }, sync_counter: true, require_everything: true })
     },
 
+    switch_tasks(context, { task, newIndex }) {
+      return context.dispatch('do_action', { api_method: 'switch_tasks', params: { board: context.state.board, task: task, newIndex: newIndex }, sync_counter: true })
+    },
+
     require_everything(context) {
       let promises = Promise.all([context.dispatch('get_users'), context.dispatch('get_cards')]);
       return promises;
