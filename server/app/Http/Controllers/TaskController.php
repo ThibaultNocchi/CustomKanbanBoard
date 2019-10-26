@@ -96,7 +96,7 @@ class TaskController extends Controller
     public function destroy($id)
     {
         $task = Auth::user()->tasks()->find($id);
-        if($task === null) throw new NoLineException('No task as asked in this board.');
+        if ($task === null) throw new NoLineException('No task as asked in this board.');
         $task->remove_task();
         return response()->json();
     }
@@ -121,11 +121,11 @@ class TaskController extends Controller
             else $task->description = null;
         }
 
-        if($request->has('name')) {
+        if ($request->has('name')) {
             $task->name = $request->name;
         }
 
-        if($request->has('color')) {
+        if ($request->has('color')) {
             $task->color = $request->color;
         }
 
@@ -134,7 +134,8 @@ class TaskController extends Controller
         return response()->json($task);
     }
 
-    public function switchTo(int $id, Request $request) {
+    public function switchTo(int $id, Request $request)
+    {
 
         $task = Auth::user()->tasks()->find($id);
         if ($task === null) throw new NoLineException('No task as asked in board.');
@@ -147,9 +148,31 @@ class TaskController extends Controller
             throw new ValidationFailedException('', $validator->errors());
         }
 
-        $task->switchTo($request->order);
+        $task->switch_to($request->order);
 
         return response()->json();
+    }
 
+    public function switchInto(int $id, Request $request)
+    {
+
+        $task = Auth::user()->tasks()->find($id);
+        if ($task === null) throw new NoLineException('No task as asked in board.');
+
+        $validator = Validator::make($request->all(), [
+            'order' => 'required|numeric',
+            'card_to' => 'required|numeric'
+        ]);
+
+        if ($validator->fails()) {
+            throw new ValidationFailedException('', $validator->errors());
+        }
+
+        $card_to = Auth::user()->cards()->find($request->card_to);
+        if ($card_to === null) throw new NoLineException('No card as asked in board.');
+
+        $task->switch_into($card_to, $request->order);
+
+        return response()->json();
     }
 }

@@ -31,16 +31,7 @@ class Task extends Model
         $card->tasks()->afterOrder($order)->decrement('order');
     }
 
-    public function setColorAttribute(string $val)
-    {
-        if (in_array(strtolower($val), $this->colors)) {
-            $this->attributes['color'] = strtolower($val);
-        } else {
-            throw new ValidationFailedException('Color not in array.');
-        }
-    }
-
-    public function switchTo(int $order)
+    public function switch_to(int $order)
     {
         $count = $this->card->tasks()->count();
         if ($order < 0) $order = 0;
@@ -56,6 +47,29 @@ class Task extends Model
             }
             $this->order = $order;
             $this->save();
+        }
+    }
+
+    public function switch_into(Card $other_card, int $new_order)
+    {
+        if (!$other_card->is($this->card)) {
+            $other_card_count = $other_card->tasks()->count();
+            $original_order = $this->order;
+            $original_card = $this->card;
+            $this->order = $other_card_count;
+            $other_card->tasks()->save($this);
+            $original_card->tasks()->where('order', '>', $original_order)->decrement('order');
+            $this->refresh();
+            $this->switch_to($new_order);
+        }
+    }
+
+    public function setColorAttribute(string $val)
+    {
+        if (in_array(strtolower($val), $this->colors)) {
+            $this->attributes['color'] = strtolower($val);
+        } else {
+            throw new ValidationFailedException('Color not in array.');
         }
     }
 
