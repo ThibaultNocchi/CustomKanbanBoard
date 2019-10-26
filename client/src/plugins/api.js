@@ -143,6 +143,14 @@ class API {
         return fetch(`${this.URL}task/${task.id}/switch_to`, { method: 'POST', headers: { "board": board.code }, body: datas })
     }
 
+    switch_tasks_into({ board, newCard, task, newIndex }) {
+        let datas = new FormData()
+        datas.append('order', newIndex)
+        datas.append('card_to', newCard.id)
+        datas.append('_method', 'PUT')
+        return fetch(`${this.URL}task/${task.id}/switch_into`, { method: 'POST', headers: { "board": board.code }, body: datas })
+    }
+
 }
 
 class Board {
