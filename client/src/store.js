@@ -54,14 +54,11 @@ export default new Vuex.Store({
         .then(r => { if (sync_counter) context.commit('decrement_syncing'); return context.state.api.parse_response(r) })
 
       if (commit_to) {
-        pro.then(function (obj) { context.commit(commit_to, obj) },
-          function (exc) { console.log(exc); throw exc })
-      } else {
-        pro.catch(exc => { console.log(exc); throw exc })
+        pro = pro.then(function (obj) { context.commit(commit_to, obj) })
       }
 
       if (require_everything) {
-        pro.then(() => context.dispatch('require_everything'), exc => { console.log(exc); throw exc }).then(() => null, exc => { console.log(exc); throw exc })
+        pro = pro.then(() => context.dispatch('require_everything'))
       }
 
       return pro

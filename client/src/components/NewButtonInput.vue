@@ -63,53 +63,53 @@ export default {
   },
 
   props: {
-    'txtBtn': {
+    txtBtn: {
       type: String,
       required: true
     },
-    'txtPlaceholder': {
+    txtPlaceholder: {
       type: String,
       required: true
     },
-    'txtHint': {
+    txtHint: {
       type: String,
       required: false,
-      default: ''
+      default: ""
     },
-    'txtError': {
+    txtError: {
       type: String,
       required: true
     },
-    'send': {
+    send: {
       type: Function,
       required: true
     },
-    'iconName': {
+    iconName: {
       type: String,
       required: false,
-      default: 'add_circle'
+      default: "add_circle"
     },
-    'large': {
+    large: {
       type: Boolean,
       required: false,
       default: false
     },
-    'outlined': {
+    outlined: {
       type: Boolean,
       required: false,
       default: false
     },
-    'text': {
+    text: {
       type: Boolean,
       required: false,
       default: false
     },
-    'block': {
+    block: {
       type: Boolean,
       required: false,
       default: false
     },
-    'inputDense': {
+    inputDense: {
       type: Boolean,
       required: false,
       default: false
@@ -135,14 +135,13 @@ export default {
     },
 
     submit() {
-      this.send(this.input_value).then(
-        () => {
+      this.send(this.input_value)
+        .then(() => {
           this.clear();
-        },
-        () => {
+        })
+        .catch(() => {
           this.errors = [this.txtError];
-        }
-      );
+        });
     }
   }
 };
