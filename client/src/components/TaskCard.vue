@@ -37,18 +37,6 @@
             >
               <v-list-item-group>
 
-                <v-list-item @click="dialog_delete = true">
-                  <v-list-item-icon class="mr-2">
-                    <v-icon
-                      dense
-                      color="error darken-1"
-                    >delete</v-icon>
-                  </v-list-item-icon>
-                  <v-list-item-content class="error--text text--darken-1">
-                    Delete this task
-                  </v-list-item-content>
-                </v-list-item>
-
                 <v-list-item @click="dialog_color = true">
                   <v-list-item-icon class="mr-2">
                     <v-icon
@@ -58,6 +46,18 @@
                   </v-list-item-icon>
                   <v-list-item-content class="primary--text">
                     Set color
+                  </v-list-item-content>
+                </v-list-item>
+
+                <v-list-item @click="dialog_delete = true">
+                  <v-list-item-icon class="mr-2">
+                    <v-icon
+                      dense
+                      color="error darken-1"
+                    >delete</v-icon>
+                  </v-list-item-icon>
+                  <v-list-item-content class="error--text text--darken-1">
+                    Delete this task
                   </v-list-item-content>
                 </v-list-item>
 
@@ -115,7 +115,10 @@
           class="pb-0 pt-1"
           @click="edit_desc"
         >
-          <span v-if="task.description" v-html="parsed_description"></span>
+          <span
+            v-if="task.description"
+            v-html="parsed_description"
+          ></span>
           <span
             v-else
             class="font-italic"
@@ -202,8 +205,8 @@ export default {
     color_to_use() {
       return this.custom_color || this.task.color;
     },
-    parsed_description () {
-      return this.task.description.replace(/(?:\r\n|\r|\n)/g, '<br />');
+    parsed_description() {
+      return this.task.description.replace(/(?:\r\n|\r|\n)/g, "<br />");
     }
   },
   data() {
@@ -283,7 +286,10 @@ export default {
     save_color() {
       this.dialog_color = false;
       this.$store
-        .dispatch("edit_color_task", { task: this.task, color: this.custom_color })
+        .dispatch("edit_color_task", {
+          task: this.task,
+          color: this.custom_color
+        })
         .catch(() => {})
         .finally(() => {
           return new Promise(resolve => {
