@@ -3,12 +3,12 @@
   <draggable
     class="scrolling-wrapper-flexbox"
     v-model="cards_list"
-    draggable=".card-item"
     @change="cards_switched"
+    handle=".drag_handle"
   >
 
     <task-list
-      draggable_ptn
+      draggable_bool
       v-for="card in cards_list"
       :key="card.id"
       :card="card"

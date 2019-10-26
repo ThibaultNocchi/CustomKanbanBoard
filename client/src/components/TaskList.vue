@@ -9,8 +9,9 @@
       transition="slide-y-transition"
     >
       <template v-slot:activator="{on}">
-        <v-card-title :class="{draggable_ptn}" class="pa-3">{{card.name}}
+        <v-card-title class="pa-3">{{card.name}}
           <v-spacer></v-spacer>
+          <v-icon v-if="draggable_bool" class="drag_handle">drag_indicator</v-icon>
           <v-btn
             icon
             v-on="on"
@@ -105,7 +106,7 @@ export default {
 
   props: {
     card: Object,
-    draggable_ptn: {
+    draggable_bool: {
       type: Boolean,
       required: false,
       default: false
@@ -127,7 +128,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.draggable_ptn {
+.drag_handle {
   cursor: grab;
 }
 </style>
