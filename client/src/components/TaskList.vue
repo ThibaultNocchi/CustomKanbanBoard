@@ -95,16 +95,29 @@
         v-model="card.tasks"
         group="tasks"
         handle=".draggable_handle"
+        draggable=".task-item"
         @change="switch_task"
+        @start="task_moving=true"
+        @end="task_moving=false"
       >
 
         <task-card
           draggable_bool
-          class="ma-1"
+          class="ma-1 task-item"
           v-for="(task, idx) in card.tasks"
           :key="idx"
           :task="task"
         ></task-card>
+
+        <v-card
+          flat
+          outlined
+          slot="header"
+          v-if="!card.tasks.length"
+          transition="slide-y-transition"
+        >
+          <v-card-text class="text-center">No task yet.</v-card-text>
+        </v-card>
 
       </draggable>
 
@@ -138,6 +151,8 @@ export default {
   data() {
     return {
       dialog_delete: false,
+
+      task_moving: false,
 
       input_title: null,
       editing_title: false,
