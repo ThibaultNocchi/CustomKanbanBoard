@@ -172,16 +172,16 @@ export default {
     save_title() {
       this.input_title_loading = true;
       this.input_title_disabled = true;
-      // this.$store
-      //   .dispatch("edit_name_task", {
-      //     task: this.task,
-      //     name: this.input_title
-      //   })
-      //   .finally(() => {
-      //     this.input_title_loading = false;
-      //     this.input_title_disabled = false;
-      //     this.editing_title = false;
-      //   });
+      this.$store
+        .dispatch("edit_name_card", {
+          card: this.card,
+          name: this.input_title
+        })
+        .finally(() => {
+          this.input_title_loading = false;
+          this.input_title_disabled = false;
+          this.editing_title = false;
+        });
     }
   }
 };
