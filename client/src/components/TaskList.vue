@@ -95,6 +95,7 @@
         v-model="card.tasks"
         group="tasks"
         handle=".draggable_handle"
+        @change="switch_task"
       >
 
         <task-card
@@ -157,6 +158,16 @@ export default {
   components: { TaskCard, NewButtonInput, Draggable },
 
   methods: {
+    switch_task(type) {
+      if ("moved" in type) {
+        console.log(`moved next task to ${type.moved.newIndex}`)
+        console.log(type.moved.element)
+      } else if ("added" in type) {
+        console.log(`moved next task to ${type.added.newIndex} in card ${this.card.id}`)        
+        console.log(type.added.element)
+      }
+    },
+
     delete_card() {
       this.$store.dispatch("remove_card", this.card);
     },
