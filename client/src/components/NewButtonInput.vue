@@ -29,11 +29,14 @@
           v-model="input_value"
           :dense="inputDense"
           @blur="clear"
+          :loading="loading"
+          :disabled="loading"
         >
           <template v-slot:append>
             <v-btn
               icon
               color="primary"
+              :disabled="loading"
               @click="submit"
             >
               <v-icon>send</v-icon>
@@ -41,6 +44,7 @@
             <v-btn
               icon
               color="error"
+              :disabled="loading"
               @click="clear"
             >
               <v-icon>close</v-icon>
@@ -58,7 +62,8 @@ export default {
     return {
       btn_add: true,
       errors: [],
-      input_value: null
+      input_value: null,
+      loading: false
     };
   },
 
@@ -135,12 +140,16 @@ export default {
     },
 
     submit() {
+      this.loading = true;
       this.send(this.input_value)
         .then(() => {
           this.clear();
         })
         .catch(() => {
           this.errors = [this.txtError];
+        })
+        .finally(() => {
+          this.loading = false;
         });
     }
   }
