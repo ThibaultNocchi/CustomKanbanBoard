@@ -115,7 +115,7 @@
           class="pb-0 pt-1"
           @click="edit_desc"
         >
-          <span v-if="task.description">{{task.description}}</span>
+          <span v-if="task.description" v-html="parsed_description"></span>
           <span
             v-else
             class="font-italic"
@@ -201,6 +201,9 @@ export default {
   computed: {
     color_to_use() {
       return this.custom_color || `#${this.task.color}`;
+    },
+    parsed_description () {
+      return this.task.description.replace(/(?:\r\n|\r|\n)/g, '<br />');
     }
   },
   data() {
