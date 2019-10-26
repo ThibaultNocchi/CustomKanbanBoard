@@ -15,7 +15,11 @@
 
         <v-col class="py-0 text-right">
 
-          <v-icon v-if="draggable_bool" small class="draggable_handle">drag_indicator</v-icon>
+          <v-icon
+            v-if="draggable_bool"
+            small
+            class="draggable_handle"
+          >drag_indicator</v-icon>
 
           <v-menu
             open-on-click
@@ -39,15 +43,12 @@
             >
               <v-list-item-group>
 
-                <v-list-item @click="dialog_color = true">
+                <v-list-item @click="edit_task">
                   <v-list-item-icon class="mr-2">
-                    <v-icon
-                      dense
-                      color="primary"
-                    >color_lens</v-icon>
+                    <v-icon dense>settings</v-icon>
                   </v-list-item-icon>
-                  <v-list-item-content class="primary--text">
-                    Set color
+                  <v-list-item-content>
+                    Settings
                   </v-list-item-content>
                 </v-list-item>
 
@@ -85,6 +86,49 @@
                   @click="delete_task()"
                 >Delete</v-btn>
               </v-card-actions>
+            </v-card>
+          </v-dialog>
+
+          <v-dialog
+            max-width="700"
+            v-model="dialog_settings"
+            persistent
+          >
+            <v-card>
+              <v-card-title>Task settings</v-card-title>
+              <v-divider></v-divider>
+
+              <v-card-text>
+                <v-form onSubmit="return false">
+                  <v-row>
+                    <v-col>
+                      <p class="subtitle-1 mb-0">Task color :</p>
+                      <swatches
+                        v-model="custom_color"
+                        :colors="Object.values($store.state.task_colors)"
+                        inline
+                        show-border
+                      />
+                    </v-col>
+                  </v-row>
+                </v-form>
+              </v-card-text>
+
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn
+                  text
+                  :disabled="settings_loading"
+                  @click="close_settings"
+                >Cancel</v-btn>
+                <v-btn
+                  depressed
+                  color="primary"
+                  :loading="settings_loading"
+                  @click="save_settings"
+                >Save</v-btn>
+              </v-card-actions>
+
             </v-card>
           </v-dialog>
 
@@ -161,39 +205,6 @@
 
     </v-card-text>
 
-    <v-overlay
-      absolute
-      opacity="0.5"
-      :value="dialog_color"
-    >
-      <v-row>
-        <v-col class="d-flex align-center">
-          <swatches
-            v-model="custom_color"
-            :colors="Object.values($store.state.task_colors)"
-          />
-        </v-col>
-        <v-col class="d-flex align-center">
-          <v-btn
-            icon
-            color="success"
-            @click="save_color"
-          >
-            <v-icon>done</v-icon>
-          </v-btn>
-        </v-col>
-        <v-col class="d-flex align-center">
-          <v-btn
-            icon
-            color="error"
-            @click="dialog_color = false"
-          >
-            <v-icon>close</v-icon>
-          </v-btn>
-        </v-col>
-      </v-row>
-    </v-overlay>
-
   </v-card>
 </template>
 
@@ -230,9 +241,11 @@ export default {
       input_title_disabled: false,
 
       dialog_delete: false,
-      dialog_color: false,
+      dialog_settings: false,
 
-      custom_color: null
+      custom_color: null,
+
+      settings_loading: false
     };
   },
   methods: {
@@ -293,21 +306,36 @@ export default {
     },
 
     save_color() {
-      this.dialog_color = false;
-      this.$store
-        .dispatch("edit_color_task", {
-          task: this.task,
-          color: this.custom_color
-        })
-        .catch(() => {})
-        .finally(() => {
-          return new Promise(resolve => {
-            setTimeout(() => {
-              resolve();
-            }, 200);
-          });
-        })
-        .then(() => (this.custom_color = null));
+      if (this.custom_color.toLowerCase() !== this.task.color.toLowerCase()) {
+        return this.$store
+          .dispatch("edit_color_task", {
+            task: this.task,
+            color: this.custom_color
+          })
+          .catch(() => {});
+      } else {
+        return new Promise(resolve => {
+          resolve();
+        });
+      }
+    },
+
+    edit_task() {
+      this.custom_color = this.task.color;
+      this.dialog_settings = true;
+    },
+
+    close_settings() {
+      this.custom_color = null;
+      this.settings_loading = false
+      this.dialog_settings = false;
+    },
+
+    save_settings() {
+      this.settings_loading = true;
+      Promise.all([this.save_color()]).then(() => {
+        this.close_settings();
+      });
     }
   }
 };
