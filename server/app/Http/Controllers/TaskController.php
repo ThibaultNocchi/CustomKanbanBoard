@@ -133,4 +133,23 @@ class TaskController extends Controller
 
         return response()->json($task);
     }
+
+    public function switchTo(int $id, Request $request) {
+
+        $task = Auth::user()->tasks()->find($id);
+        if ($task === null) throw new NoLineException('No task as asked in board.');
+
+        $validator = Validator::make($request->all(), [
+            'order' => 'required|numeric',
+        ]);
+
+        if ($validator->fails()) {
+            throw new ValidationFailedException('', $validator->errors());
+        }
+
+        $task->switchTo($request->order);
+
+        return response()->json();
+
+    }
 }

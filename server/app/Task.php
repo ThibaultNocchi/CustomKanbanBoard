@@ -40,6 +40,25 @@ class Task extends Model
         }
     }
 
+    public function switchTo(int $order)
+    {
+        $count = $this->card->tasks()->count();
+        if ($order < 0) $order = 0;
+        if ($order >= $count) $order = $count - 1;
+        if ($order !== $this->order) {
+            $originalOrder = $this->order;
+            $this->order = $count;
+            $this->save();
+            if ($order < $originalOrder) {
+                $this->card->tasks()->where('order', '>=', $order)->where('order', '<', $originalOrder)->orderBy('order', 'desc')->increment('order');
+            } else {
+                $this->card->tasks()->where('order', '>', $originalOrder)->where('order', '<=', $order)->orderBy('order')->decrement('order');
+            }
+            $this->order = $order;
+            $this->save();
+        }
+    }
+
     public function card()
     {
         return $this->belongsTo('App\Card');
