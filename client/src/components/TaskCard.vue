@@ -306,7 +306,7 @@ export default {
     },
 
     save_color() {
-      if (this.custom_color.toLowerCase() !== this.task.color.toLowerCase()) {
+      if (this.task.color === undefined || this.custom_color.toLowerCase() !== this.task.color.toLowerCase()) {
         return this.$store
           .dispatch("edit_color_task", {
             task: this.task,
