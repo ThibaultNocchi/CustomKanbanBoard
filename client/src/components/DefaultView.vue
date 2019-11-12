@@ -178,6 +178,7 @@
 </template>
 
 <script>
+import copy from "copy-to-clipboard";
 export default {
   data() {
     return {
@@ -206,15 +207,14 @@ export default {
         .finally(() => (this.refreshing = false));
     },
 
+    copy_txt(txt) {
+      let copied = copy(txt, { format: "text/plain" });
+      if (copied) this.snackbar_copy_success = true;
+      else this.snackbar_copy_error = true;
+    },
+
     copy_code() {
-      navigator.clipboard.writeText(this.$store.state.board.code).then(
-        () => {
-          this.snackbar_copy_success = true;
-        },
-        () => {
-          this.snackbar_copy_error = true;
-        }
-      );
+      this.copy_txt(this.$store.state.board.code);
     },
 
     copy_link() {
@@ -222,14 +222,7 @@ export default {
         name: "login_with_code",
         params: { code: this.$store.state.board.code }
       });
-      navigator.clipboard.writeText(window.location.host + link.href).then(
-        () => {
-          this.snackbar_copy_success = true;
-        },
-        () => {
-          this.snackbar_copy_error = true;
-        }
-      );
+      this.copy_txt(window.location.host + link.href);
     }
   }
 };
