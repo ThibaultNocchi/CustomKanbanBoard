@@ -7,11 +7,17 @@
 
     <v-card-text class="pa-3 body-2 font-weight-regular">
 
-      <v-row v-if="!editing_title">
+      <v-row
+        v-if="!editing_title"
+        no-gutters
+      >
         <v-col
           @click="edit_title"
           class="py-0 font-weight-bold align-center d-flex"
-        >{{task.name}}</v-col>
+          cols="10"
+        >
+          <div class="text-truncate">{{task.name}}</div>
+        </v-col>
 
         <v-col class="py-0 text-right">
 
@@ -306,7 +312,10 @@ export default {
     },
 
     save_color() {
-      if (this.task.color === undefined || this.custom_color.toLowerCase() !== this.task.color.toLowerCase()) {
+      if (
+        this.task.color === undefined ||
+        this.custom_color.toLowerCase() !== this.task.color.toLowerCase()
+      ) {
         return this.$store
           .dispatch("edit_color_task", {
             task: this.task,
@@ -327,7 +336,7 @@ export default {
 
     close_settings() {
       this.custom_color = null;
-      this.settings_loading = false
+      this.settings_loading = false;
       this.dialog_settings = false;
     },
 
