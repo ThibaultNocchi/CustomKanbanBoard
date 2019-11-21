@@ -13,7 +13,7 @@
       :key="card.id"
       :card="card"
       class="card-item ma-2"
-      :style="{width: '400px'}"
+      :style="{width: '400px', minWidth: '400px'}"
     ></task-list>
 
     <new-button-input
