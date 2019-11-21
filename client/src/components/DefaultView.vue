@@ -39,6 +39,7 @@
       app
       disable-route-watcher
       v-model="drawer"
+      temporary
     >
 
       <template v-slot:prepend>

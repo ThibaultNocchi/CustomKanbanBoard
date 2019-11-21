@@ -13,20 +13,20 @@
       :key="card.id"
       :card="card"
       class="card-item ma-2"
-      :style="{width: '300px', minWidth: '300px'}"
+      :style="{width: '400px'}"
     ></task-list>
 
-      <new-button-input
-        txt-btn="New card"
-        txt-placeholder="Name"
-        txt-hint="New card name."
-        txt-error="Card already exists."
-        :send="submit_card"
-        large
-        outlined
-        class="ml-8 my-auto"
-        slot="footer"
-      ></new-button-input>
+    <new-button-input
+      txt-btn="New card"
+      txt-placeholder="Name"
+      txt-hint="New card name."
+      txt-error="Card already exists."
+      :send="submit_card"
+      large
+      outlined
+      class="ml-8 my-auto"
+      slot="footer"
+    ></new-button-input>
 
   </draggable>
 
