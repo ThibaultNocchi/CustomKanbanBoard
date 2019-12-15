@@ -1,25 +1,11 @@
 <template>
   <v-app>
     <v-content>
-      <v-container
-        fluid
-        class="fill-height"
-      >
-        <v-row
-          align="center"
-          justify="center"
-        >
-          <v-col
-            cols="12"
-            sm="8"
-            md="4"
-          >
+      <v-container fluid class="fill-height">
+        <v-row align="center" justify="center">
+          <v-col cols="12" sm="8" md="4">
             <v-card elevation="12">
-              <v-toolbar
-                color="primary"
-                dark
-                flat
-              >
+              <v-toolbar color="primary" dark flat>
                 <v-toolbar-title>Super Kanban</v-toolbar-title>
               </v-toolbar>
 
@@ -50,15 +36,13 @@
 
                   <v-card-actions>
                     <div class="flex-grow-1"></div>
-                    <v-btn
-                      text
-                      @click="signup_bool = true"
-                    >New board</v-btn>
+                    <v-btn text @click="signup_bool = true">New board</v-btn>
                     <v-btn
                       color="primary"
                       @click="connect"
                       :disabled="!login_validity || logged.length > 0"
-                    >Connect</v-btn>
+                      >Connect</v-btn
+                    >
                   </v-card-actions>
                 </v-form>
               </v-scroll-x-transition>
@@ -87,19 +71,13 @@
 
                   <v-card-actions>
                     <div class="flex-grow-1"></div>
-                    <v-btn
-                      text
-                      @click="signup_bool = false"
-                    >Connect</v-btn>
-                    <v-btn
-                      color="primary"
-                      @click="signup"
-                      :disabled="loading"
-                    >Signup and login</v-btn>
+                    <v-btn text @click="signup_bool = false">Connect</v-btn>
+                    <v-btn color="primary" @click="signup" :disabled="loading"
+                      >Signup and login</v-btn
+                    >
                   </v-card-actions>
                 </v-form>
               </v-scroll-x-transition>
-
             </v-card>
           </v-col>
         </v-row>
@@ -172,7 +150,7 @@ export default {
             this.loading = false;
             this.signup_success = [];
             this.errors = ["Error creating board."];
-            throw e
+            throw e;
           }
         )
         .then(() => {

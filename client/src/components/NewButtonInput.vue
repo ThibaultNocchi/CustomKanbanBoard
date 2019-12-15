@@ -10,15 +10,12 @@
         @click="btn_click"
         v-show="btn_add"
       >
-        <v-icon left>{{iconName}}</v-icon>{{txtBtn}}
+        <v-icon left>{{ iconName }}</v-icon
+        >{{ txtBtn }}
       </v-btn>
     </v-scale-transition>
     <v-scale-transition hide-on-leave>
-      <v-form
-        @submit="submit"
-        onSubmit="return false"
-        v-show="!btn_add"
-      >
+      <v-form @submit="submit" onSubmit="return false" v-show="!btn_add">
         <v-text-field
           :placeholder="txtPlaceholder"
           :hint="txtHint"
@@ -33,20 +30,10 @@
           :disabled="loading"
         >
           <template v-slot:append>
-            <v-btn
-              icon
-              color="primary"
-              :disabled="loading"
-              @click="submit"
-            >
+            <v-btn icon color="primary" :disabled="loading" @click="submit">
               <v-icon>send</v-icon>
             </v-btn>
-            <v-btn
-              icon
-              color="error"
-              :disabled="loading"
-              @click="clear"
-            >
+            <v-btn icon color="error" :disabled="loading" @click="clear">
               <v-icon>close</v-icon>
             </v-btn>
           </template>

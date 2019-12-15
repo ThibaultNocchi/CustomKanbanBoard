@@ -16,6 +16,5 @@ export default {
 <style lang="scss">
 .overflowed {
   overflow-x: auto;
-
 }
 </style>

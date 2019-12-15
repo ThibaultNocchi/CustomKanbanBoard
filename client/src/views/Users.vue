@@ -12,33 +12,20 @@
       >
         <v-card outlined>
           <v-row>
-            <v-col
-              cols="auto"
-              class="ml-3"
-            >
-              <v-avatar color="grey">{{user.name.charAt(0)}}</v-avatar>
+            <v-col cols="auto" class="ml-3">
+              <v-avatar color="grey">{{ user.name.charAt(0) }}</v-avatar>
             </v-col>
-            <v-col
-              cols="auto"
-              class="d-flex align-center"
-            >
-              <div class="title">{{user.name}}</div>
+            <v-col cols="auto" class="d-flex align-center">
+              <div class="title">{{ user.name }}</div>
             </v-col>
             <v-spacer></v-spacer>
-            <v-col
-              cols="auto"
-              class="d-flex align-center mr-3"
-            >
-              <v-btn
-                icon
-                @click="remove_user(user)"
-              >
+            <v-col cols="auto" class="d-flex align-center mr-3">
+              <v-btn icon @click="remove_user(user)">
                 <v-icon color="red">close</v-icon>
               </v-btn>
             </v-col>
           </v-row>
         </v-card>
-
       </v-col>
 
       <v-col
@@ -59,9 +46,7 @@
           outlined
         ></new-button-input>
       </v-col>
-
     </v-row>
-
   </default-view>
 </template>
 

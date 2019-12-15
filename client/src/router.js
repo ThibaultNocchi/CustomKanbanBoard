@@ -1,36 +1,36 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import Login from './views/Login.vue'
+import Vue from "vue";
+import Router from "vue-router";
+import Login from "./views/Login.vue";
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
-  mode: 'history',
+  mode: "history",
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/',
-      name: 'login',
+      path: "/",
+      name: "login",
       component: Login
     },
     {
-      path: '/home',
-      name: 'home',
-      component: function () { 
-        return import('./views/Home.vue')
+      path: "/home",
+      name: "home",
+      component: function() {
+        return import("./views/Home.vue");
       }
     },
     {
-      path: '/login/:code',
-      name: 'login_with_code',
+      path: "/login/:code",
+      name: "login_with_code",
       component: Login
     },
     {
-      path: '/users',
-      name: 'users',
-      component: function () { 
-        return import('./views/Users.vue')
+      path: "/users",
+      name: "users",
+      component: function() {
+        return import("./views/Users.vue");
       }
     }
   ]
-})
+});

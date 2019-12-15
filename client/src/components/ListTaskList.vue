@@ -1,19 +1,17 @@
 <template>
-
   <draggable
     class="scrolling-wrapper-flexbox"
     v-model="cards_list"
     @change="cards_switched"
     handle=".drag_handle"
   >
-
     <task-list
       draggable_bool
       v-for="card in cards_list"
       :key="card.id"
       :card="card"
       class="card-item ma-2"
-      :style="{width: '400px', minWidth: '400px'}"
+      :style="{ width: '400px', minWidth: '400px' }"
     ></task-list>
 
     <new-button-input
@@ -27,9 +25,7 @@
       class="ml-8 my-auto"
       slot="footer"
     ></new-button-input>
-
   </draggable>
-
 </template>
 
 <script>

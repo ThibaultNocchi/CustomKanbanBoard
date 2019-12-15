@@ -1,5 +1,4 @@
 <template>
-
   <v-card>
     <v-menu
       open-on-click
@@ -8,30 +7,20 @@
       offset-y
       transition="slide-y-transition"
     >
-      <template v-slot:activator="{on}">
-
-        <v-card-title
-          v-if="!editing_title"
-          class="pa-3"
-        ><span @click="edit_title">{{card.name}}</span>
+      <template v-slot:activator="{ on }">
+        <v-card-title v-if="!editing_title" class="pa-3"
+          ><span @click="edit_title">{{ card.name }}</span>
           <v-spacer></v-spacer>
-          <v-icon
-            v-if="draggable_bool"
-            class="drag_handle"
-          >drag_indicator</v-icon>
-          <v-btn
-            icon
-            v-on="on"
+          <v-icon v-if="draggable_bool" class="drag_handle"
+            >drag_indicator</v-icon
           >
+          <v-btn icon v-on="on">
             <v-icon>more_vert</v-icon>
           </v-btn>
         </v-card-title>
 
         <v-card-title v-else>
-          <v-form
-            @submit="save_title"
-            onSubmit="return false"
-          >
+          <v-form @submit="save_title" onSubmit="return false">
             <v-text-field
               dense
               ref="title_input"
@@ -43,46 +32,33 @@
             ></v-text-field>
           </v-form>
         </v-card-title>
-
       </template>
 
       <v-list dense>
         <v-list-item-group>
-
           <v-list-item @click="dialog_delete = true">
             <v-list-item-icon class="mr-2">
-              <v-icon
-                dense
-                color="error darken-1"
-              >delete</v-icon>
+              <v-icon dense color="error darken-1">delete</v-icon>
             </v-list-item-icon>
             <v-list-item-content class="error--text text--darken-1">
               Delete this card
             </v-list-item-content>
           </v-list-item>
-
         </v-list-item-group>
       </v-list>
-
     </v-menu>
 
-    <v-dialog
-      max-width="500"
-      v-model="dialog_delete"
-    >
+    <v-dialog max-width="500" v-model="dialog_delete">
       <v-card>
         <v-card-title class="headline">Deleting card confirmation</v-card-title>
-        <v-card-text>You are going to delete the "{{card.name}}" card and all its associated tasks. Are you sure?</v-card-text>
+        <v-card-text
+          >You are going to delete the "{{ card.name }}" card and all its
+          associated tasks. Are you sure?</v-card-text
+        >
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn
-            text
-            @click="dialog_delete = false"
-          >Cancel</v-btn>
-          <v-btn
-            color="error darken-1"
-            @click="delete_card()"
-          >Delete</v-btn>
+          <v-btn text @click="dialog_delete = false">Cancel</v-btn>
+          <v-btn color="error darken-1" @click="delete_card()">Delete</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -90,17 +66,15 @@
     <v-divider></v-divider>
 
     <v-card-text class="pa-2">
-
       <draggable
         v-model="card.tasks"
         group="tasks"
         handle=".draggable_handle"
         draggable=".task-item"
         @change="switch_task"
-        @start="task_moving=true"
-        @end="task_moving=false"
+        @start="task_moving = true"
+        @end="task_moving = false"
       >
-
         <task-card
           draggable_bool
           class="ma-1 task-item"
@@ -118,7 +92,6 @@
         >
           <v-card-text class="text-center">No task yet.</v-card-text>
         </v-card>
-
       </draggable>
 
       <v-card flat>
@@ -135,11 +108,8 @@
           ></new-button-input>
         </v-card-text>
       </v-card>
-
     </v-card-text>
-
   </v-card>
-
 </template>
 
 <script>

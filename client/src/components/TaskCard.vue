@@ -1,31 +1,19 @@
 <template>
-  <v-card
-    flat
-    outlined
-    :color="color_to_use ? `${color_to_use}` : ''"
-  >
-
+  <v-card flat outlined :color="color_to_use ? `${color_to_use}` : ''">
     <v-card-text class="pa-3 body-2 font-weight-regular">
-
-      <v-row
-        v-if="!editing_title"
-        no-gutters
-      >
+      <v-row v-if="!editing_title" no-gutters>
         <v-col
           @click="edit_title"
           class="py-0 font-weight-bold align-center d-flex"
           cols="10"
         >
-          <div class="text-truncate">{{task.name}}</div>
+          <div class="text-truncate">{{ task.name }}</div>
         </v-col>
 
         <v-col class="py-0 text-right">
-
-          <v-icon
-            v-if="draggable_bool"
-            small
-            class="draggable_handle"
-          >drag_indicator</v-icon>
+          <v-icon v-if="draggable_bool" small class="draggable_handle"
+            >drag_indicator</v-icon
+          >
 
           <v-menu
             open-on-click
@@ -34,21 +22,13 @@
             offset-y
             transition="slide-y-transition"
           >
-            <template v-slot:activator="{on}">
-              <v-btn
-                icon
-                x-small
-                v-on="on"
-              >
+            <template v-slot:activator="{ on }">
+              <v-btn icon x-small v-on="on">
                 <v-icon>more_vert</v-icon>
               </v-btn>
             </template>
-            <v-list
-              dense
-              class="body-2"
-            >
+            <v-list dense class="body-2">
               <v-list-item-group>
-
                 <v-list-item @click="edit_task">
                   <v-list-item-icon class="mr-2">
                     <v-icon dense>settings</v-icon>
@@ -60,46 +40,36 @@
 
                 <v-list-item @click="dialog_delete = true">
                   <v-list-item-icon class="mr-2">
-                    <v-icon
-                      dense
-                      color="error darken-1"
-                    >delete</v-icon>
+                    <v-icon dense color="error darken-1">delete</v-icon>
                   </v-list-item-icon>
                   <v-list-item-content class="error--text text--darken-1">
                     Delete this task
                   </v-list-item-content>
                 </v-list-item>
-
               </v-list-item-group>
             </v-list>
           </v-menu>
 
-          <v-dialog
-            max-width="500"
-            v-model="dialog_delete"
-          >
+          <v-dialog max-width="500" v-model="dialog_delete">
             <v-card>
-              <v-card-title class="headline">Deleting task confirmation</v-card-title>
-              <v-card-text>You are going to delete the "{{task.name}}" task. Are you sure?</v-card-text>
+              <v-card-title class="headline"
+                >Deleting task confirmation</v-card-title
+              >
+              <v-card-text
+                >You are going to delete the "{{ task.name }}" task. Are you
+                sure?</v-card-text
+              >
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn
-                  text
-                  @click="dialog_delete = false"
-                >Cancel</v-btn>
-                <v-btn
-                  color="error darken-1"
-                  @click="delete_task()"
-                >Delete</v-btn>
+                <v-btn text @click="dialog_delete = false">Cancel</v-btn>
+                <v-btn color="error darken-1" @click="delete_task()"
+                  >Delete</v-btn
+                >
               </v-card-actions>
             </v-card>
           </v-dialog>
 
-          <v-dialog
-            max-width="700"
-            v-model="dialog_settings"
-            persistent
-          >
+          <v-dialog max-width="700" v-model="dialog_settings" persistent>
             <v-card>
               <v-card-title>Task settings</v-card-title>
               <v-divider></v-divider>
@@ -122,31 +92,25 @@
 
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn
-                  text
-                  :disabled="settings_loading"
-                  @click="close_settings"
-                >Cancel</v-btn>
+                <v-btn text :disabled="settings_loading" @click="close_settings"
+                  >Cancel</v-btn
+                >
                 <v-btn
                   depressed
                   color="primary"
                   :loading="settings_loading"
                   @click="save_settings"
-                >Save</v-btn>
+                  >Save</v-btn
+                >
               </v-card-actions>
-
             </v-card>
           </v-dialog>
-
         </v-col>
       </v-row>
 
       <v-row v-else>
         <v-col class="py-0">
-          <v-form
-            @submit="save_title"
-            onSubmit="return false"
-          >
+          <v-form @submit="save_title" onSubmit="return false">
             <v-text-field
               dense
               ref="title_input"
@@ -163,27 +127,15 @@
       <v-divider class="mt-2 mb-1"></v-divider>
 
       <v-row v-if="!editing_desc">
-        <v-col
-          class="pb-0 pt-1"
-          @click="edit_desc"
-        >
-          <span
-            v-if="task.description"
-            v-html="parsed_description"
-          ></span>
-          <span
-            v-else
-            class="font-italic"
-          >No description given.</span>
+        <v-col class="pb-0 pt-1" @click="edit_desc">
+          <span v-if="task.description" v-html="parsed_description"></span>
+          <span v-else class="font-italic">No description given.</span>
         </v-col>
       </v-row>
 
       <v-row v-else>
         <v-col class="pb-0 pt-1">
-          <v-form
-            @submit="save_desc"
-            onSubmit="return false"
-          >
+          <v-form @submit="save_desc" onSubmit="return false">
             <v-textarea
               auto-grow
               rows="1"
@@ -208,9 +160,7 @@
           </v-form>
         </v-col>
       </v-row>
-
     </v-card-text>
-
   </v-card>
 </template>
 
