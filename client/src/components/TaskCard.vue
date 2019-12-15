@@ -78,6 +78,19 @@
                 <v-form onSubmit="return false">
                   <v-row>
                     <v-col>
+                      <p class="subtitle-1 mb-0">Users :</p>
+                      <v-autocomplete
+                        :items="$store.getters.users_names"
+                        multiple
+                        chips
+                        clearable
+                        deletable-chips
+                      ></v-autocomplete>
+                    </v-col>
+                  </v-row>
+
+                  <v-row>
+                    <v-col>
                       <p class="subtitle-1 mb-0">Task color :</p>
                       <swatches
                         v-model="custom_color"

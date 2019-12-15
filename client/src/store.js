@@ -19,6 +19,12 @@ export default new Vuex.Store({
     task_colors: api.colors.colors
   },
 
+  getters: {
+    users_names: state => {
+      return state.users.map(item => item.name);
+    }
+  },
+
   mutations: {
     set_board(state, val) {
       state.board = val;
