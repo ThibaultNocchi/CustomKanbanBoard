@@ -42,7 +42,7 @@ class Card extends Model
             $originalOrder = $this->order;
             $this->order = $count;
             $this->save();
-            if($order < $originalOrder) {
+            if ($order < $originalOrder) {
                 $this->board->cards()->where('order', '>=', $order)->where('order', '<', $originalOrder)->orderBy('order', 'desc')->increment('order');
             } else {
                 $this->board->cards()->where('order', '>', $originalOrder)->where('order', '<=', $order)->orderBy('order')->decrement('order');

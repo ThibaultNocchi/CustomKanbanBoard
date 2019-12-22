@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Task extends Model
 {
     protected $hidden = ['card_id', 'created_at', 'updated_at', 'laravel_through_key'];
+    protected $appends = ['users'];
 
     private $colors = ['red', 'pink', 'purple', 'blue', 'green', 'yellow', 'orange', 'brown', 'grey'];
 
@@ -64,6 +65,11 @@ class Task extends Model
         }
     }
 
+    public function getUsersAttribute()
+    {
+        return $this->users()->get()->pluck('id');
+    }
+
     public function setColorAttribute(string $val)
     {
         if (in_array(strtolower($val), $this->colors)) {
@@ -76,6 +82,11 @@ class Task extends Model
     public function card()
     {
         return $this->belongsTo('App\Card');
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany('App\User');
     }
 
     public function scopeOrdered($query)

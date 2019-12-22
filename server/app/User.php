@@ -11,8 +11,9 @@ class User extends Model
 
     protected $hidden = ['created_at', 'updated_at', 'board_id'];
 
-    public static function register(Board $b, string $name) {
-        if($b->users()->onName($name)->first() !== null) {
+    public static function register(Board $b, string $name)
+    {
+        if ($b->users()->onName($name)->first() !== null) {
             throw new InvalidNameException();
         }
         $user = new User();
@@ -20,13 +21,19 @@ class User extends Model
         $b->users()->save($user);
         return $user;
     }
-    
-    public function board(){
+
+    public function board()
+    {
         return $this->belongsTo('App\Board');
     }
 
-    public function scopeOnName($query, string $name) {
-        return $query->where('name', $name);
+    public function tasks()
+    {
+        return $this->belongsToMany('App\Task');
     }
 
+    public function scopeOnName($query, string $name)
+    {
+        return $query->where('name', $name);
+    }
 }
