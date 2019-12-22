@@ -173,6 +173,31 @@
           </v-form>
         </v-col>
       </v-row>
+
+      <v-divider class="mt-2 mb-1"></v-divider>
+
+      <!-- USERS IN TASKS -->
+      <v-row v-if="task.users.length === 0">
+        <v-col class="pb-0 pt-1 caption">
+          No user assigned to task.
+        </v-col>
+      </v-row>
+
+      <v-row v-else>
+        <v-col
+          cols="auto"
+          class="pb-0 pt-1"
+          v-for="(name, idx) in user_names"
+          :key="idx"
+        >
+          <v-tooltip top>
+            <template v-slot:activator="{ on }">
+              <v-avatar v-on="on" color="grey">{{ name.charAt(0) }}</v-avatar>
+            </template>
+            <span>{{ name }}</span>
+          </v-tooltip>
+        </v-col>
+      </v-row>
     </v-card-text>
   </v-card>
 </template>
