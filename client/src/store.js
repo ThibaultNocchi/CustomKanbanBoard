@@ -22,6 +22,14 @@ export default new Vuex.Store({
   getters: {
     users_names: state => {
       return state.users.map(item => item.name);
+    },
+    user_name: state => id => {
+      let res = "";
+      state.users.forEach(element => {
+        if (element.id === id) res = element.name;
+      });
+      if (res === "") throw "NoUserId";
+      else return res;
     }
   },
 
@@ -63,7 +71,7 @@ export default new Vuex.Store({
       });
 
       if (commit_to) {
-        pro = pro.then(function(obj) {
+        pro = pro.then(function (obj) {
           context.commit(commit_to, obj);
         });
       }

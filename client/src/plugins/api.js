@@ -199,7 +199,7 @@ class API {
 }
 
 class Board {
-  constructor() {}
+  constructor() { }
 
   set response(resp) {
     this.name = resp.name;
@@ -208,7 +208,7 @@ class Board {
 }
 
 class User {
-  constructor() {}
+  constructor() { }
   set response(resp) {
     this.id = resp.id;
     this.name = resp.name;
@@ -216,7 +216,7 @@ class User {
 }
 
 class Card {
-  constructor() {}
+  constructor() { }
   set response(resp) {
     this.id = resp.id;
     this.name = resp.name;
@@ -231,7 +231,7 @@ class Card {
 }
 
 class Task {
-  constructor() {}
+  constructor() { }
   get color() {
     return this._color;
   }
@@ -243,6 +243,7 @@ class Task {
     this.name = resp.name;
     this.description = resp.description;
     this.color = resp.color;
+    this.users = resp.users;
   }
 }
 

@@ -196,6 +196,9 @@ export default {
     },
     parsed_description() {
       return this.task.description.replace(/(?:\r\n|\r|\n)/g, "<br />");
+    },
+    user_names() {
+      return this.task.users.map(el => this.$store.getters.user_name(el));
     }
   },
   data() {
