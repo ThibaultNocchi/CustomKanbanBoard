@@ -149,11 +149,17 @@ class API {
     });
   }
 
-  edit_task({ board, task, color }) {
+  edit_task({ board, task, color, users }) {
     let color_to_send = colors.colors_inverted[color];
-    if (color_to_send !== undefined) {
+    if (color_to_send !== undefined || users !== undefined) {
       let datas = new FormData();
-      datas.append("color", color_to_send);
+      if (color_to_send !== undefined) datas.append("color", color_to_send);
+      if (users !== undefined) {
+        if (users.length === 0) datas.append("users[]", "");
+        users.forEach(element => {
+          datas.append("users[]", element);
+        });
+      }
       datas.append("_method", "PUT");
       return fetch(`${this.URL}task/${task.id}`, {
         method: "POST",

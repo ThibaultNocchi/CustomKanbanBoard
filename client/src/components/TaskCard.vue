@@ -320,21 +320,12 @@ export default {
     },
 
     save_task() {
-      if (
-        this.task.color === undefined ||
-        this.custom_color.toLowerCase() !== this.task.color.toLowerCase()
-      ) {
-        return this.$store
-          .dispatch("edit_task", {
-            task: this.task,
-            color: this.custom_color
-          })
-          .catch(() => {});
-      } else {
-        return new Promise(resolve => {
-          resolve();
-        });
-      }
+      let datas = {
+        task: this.task,
+        color: this.custom_color,
+        users: this.users_on_task
+      };
+      return this.$store.dispatch("edit_task", datas).catch(() => {});
     },
 
     edit_task() {

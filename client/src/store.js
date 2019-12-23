@@ -207,13 +207,34 @@ export default new Vuex.Store({
       }
     },
 
-    edit_task(context, { task, color }) {
-      if (task.color !== color) {
+    edit_task(context, { task, color, users }) {
+      users.sort();
+      let users_changed = true;
+      if (users.length === task.users.length) {
+        for (let i = 0; i < users.length; ++i) {
+          if (users[i] !== task.users[i]) break;
+          if (i === users.length - 1) users_changed = false;
+        }
+      }
+
+      if (task.color !== color || users_changed) {
+        let params = {
+          board: context.state.board,
+          task: task,
+          color: undefined,
+          users: undefined
+        };
+        if (task.color !== color) params.color = color;
+        if (users_changed) params.users = users;
         return context.dispatch("do_action", {
           api_method: "edit_task",
-          params: { board: context.state.board, task: task, color: color },
+          params: params,
           sync_counter: true,
           require_everything: true
+        });
+      } else {
+        return new Promise(resolve => {
+          resolve();
         });
       }
     },
