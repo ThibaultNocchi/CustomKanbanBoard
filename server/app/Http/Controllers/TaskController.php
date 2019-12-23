@@ -109,7 +109,9 @@ class TaskController extends Controller
         $validator = Validator::make($request->all(), [
             'description' => 'string',
             'name' => 'sometimes|required|string',
-            'color' => 'string'
+            'color' => 'string',
+            'users' => 'sometimes|required|array',
+            'users.*' => 'integer'
         ]);
 
         if ($validator->fails()) {
@@ -127,6 +129,18 @@ class TaskController extends Controller
 
         if ($request->has('color')) {
             $task->color = $request->color;
+        }
+
+        if ($request->has('users')) {
+            $users = [];
+            if ($request->users[0] !== "") {
+                foreach ($request->users as $key => $user_id) {
+                    $potential_user = Auth::user()->users()->find($user_id);
+                    if ($potential_user === null) throw new NoLineException('Can\'t validate users given.');
+                }
+                $users = $request->users;
+            }
+            $task->users()->sync($users);
         }
 
         $task->save();
