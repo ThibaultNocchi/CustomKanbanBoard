@@ -68,6 +68,6 @@ export default {
 .scrolling-wrapper-flexbox {
   display: flex;
   flex-wrap: nowrap;
-  align-items: start;
+  align-items: flex-start;
 }
 </style>
