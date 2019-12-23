@@ -13,7 +13,7 @@
         <v-card outlined>
           <v-row>
             <v-col cols="auto" class="ml-3">
-              <v-avatar color="grey">{{ user.name.charAt(0) }}</v-avatar>
+              <user-avatar :user_name="user.name"></user-avatar>
             </v-col>
             <v-col cols="auto" class="d-flex align-center">
               <div class="title">{{ user.name }}</div>
@@ -53,9 +53,10 @@
 <script>
 import DefaultView from "@/components/DefaultView.vue";
 import NewButtonInput from "@/components/NewButtonInput.vue";
+import UserAvatar from "@/components/UserAvatar.vue";
 
 export default {
-  components: { DefaultView, NewButtonInput },
+  components: { DefaultView, NewButtonInput, UserAvatar },
 
   methods: {
     remove_user(user) {

@@ -192,7 +192,9 @@
         >
           <v-tooltip top>
             <template v-slot:activator="{ on }">
-              <v-avatar v-on="on" color="grey">{{ name.charAt(0) }}</v-avatar>
+              <div v-on="on">
+                <user-avatar :user_name="name"></user-avatar>
+              </div>
             </template>
             <span>{{ name }}</span>
           </v-tooltip>
@@ -205,6 +207,8 @@
 <script>
 import swatches from "vue-swatches";
 import "vue-swatches/dist/vue-swatches.min.css";
+import UserAvatar from "@/components/UserAvatar.vue";
+
 export default {
   props: {
     task: Object,
@@ -214,7 +218,7 @@ export default {
       default: false
     }
   },
-  components: { swatches },
+  components: { swatches, UserAvatar },
   computed: {
     color_to_use() {
       return this.custom_color || this.task.color;
