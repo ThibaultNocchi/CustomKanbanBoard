@@ -319,13 +319,13 @@ export default {
       this.$store.dispatch("remove_task", { task: this.task });
     },
 
-    save_color() {
+    save_task() {
       if (
         this.task.color === undefined ||
         this.custom_color.toLowerCase() !== this.task.color.toLowerCase()
       ) {
         return this.$store
-          .dispatch("edit_color_task", {
+          .dispatch("edit_task", {
             task: this.task,
             color: this.custom_color
           })
@@ -347,11 +347,12 @@ export default {
       this.custom_color = null;
       this.settings_loading = false;
       this.dialog_settings = false;
+      this.users_on_task = [];
     },
 
     save_settings() {
       this.settings_loading = true;
-      Promise.all([this.save_color()]).then(() => {
+      Promise.all([this.save_task()]).then(() => {
         this.close_settings();
       });
     }

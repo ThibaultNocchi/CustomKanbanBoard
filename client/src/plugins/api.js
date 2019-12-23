@@ -149,7 +149,7 @@ class API {
     });
   }
 
-  edit_color_task({ board, task, color }) {
+  edit_task({ board, task, color }) {
     let color_to_send = colors.colors_inverted[color];
     if (color_to_send !== undefined) {
       let datas = new FormData();

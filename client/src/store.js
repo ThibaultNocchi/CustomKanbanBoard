@@ -207,10 +207,10 @@ export default new Vuex.Store({
       }
     },
 
-    edit_color_task(context, { task, color }) {
+    edit_task(context, { task, color }) {
       if (task.color !== color) {
         return context.dispatch("do_action", {
-          api_method: "edit_color_task",
+          api_method: "edit_task",
           params: { board: context.state.board, task: task, color: color },
           sync_counter: true,
           require_everything: true
