@@ -20,9 +20,6 @@ export default new Vuex.Store({
   },
 
   getters: {
-    users_names: state => {
-      return state.users.map(item => item.name);
-    },
     user_name: state => id => {
       let res = "";
       state.users.forEach(element => {
@@ -30,6 +27,11 @@ export default new Vuex.Store({
       });
       if (res === "") throw "NoUserId";
       else return res;
+    },
+    users_select: state => {
+      return state.users.map(el => {
+        return { text: el.name, value: el.id };
+      });
     }
   },
 

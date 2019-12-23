@@ -1,6 +1,8 @@
 <template>
   <v-card flat outlined :color="color_to_use ? `${color_to_use}` : ''">
     <v-card-text class="pa-3 body-2 font-weight-regular">
+      <!-- TITLE + HIDDEN MENUS -->
+
       <v-row v-if="!editing_title" no-gutters>
         <v-col
           @click="edit_title"
@@ -69,6 +71,8 @@
             </v-card>
           </v-dialog>
 
+          <!-- SETTINGS DIALOG -->
+
           <v-dialog max-width="700" v-model="dialog_settings" persistent>
             <v-card>
               <v-card-title>Task settings</v-card-title>
@@ -80,7 +84,8 @@
                     <v-col>
                       <p class="subtitle-1 mb-0">Users :</p>
                       <v-autocomplete
-                        :items="$store.getters.users_names"
+                        :items="$store.getters.users_select"
+                        v-model="users_on_task"
                         multiple
                         chips
                         clearable
@@ -138,6 +143,8 @@
       </v-row>
 
       <v-divider class="mt-2 mb-1"></v-divider>
+
+      <!-- DESCRIPTION -->
 
       <v-row v-if="!editing_desc">
         <v-col class="pb-0 pt-1" @click="edit_desc">
@@ -218,7 +225,9 @@ export default {
       default: false
     }
   },
+
   components: { swatches, UserAvatar },
+
   computed: {
     color_to_use() {
       return this.custom_color || this.task.color;
@@ -230,6 +239,7 @@ export default {
       return this.task.users.map(el => this.$store.getters.user_name(el));
     }
   },
+
   data() {
     return {
       editing_desc: false,
@@ -246,9 +256,12 @@ export default {
 
       custom_color: null,
 
+      users_on_task: [],
+
       settings_loading: false
     };
   },
+
   methods: {
     edit_desc() {
       this.editing_desc = true;
@@ -327,6 +340,7 @@ export default {
     edit_task() {
       this.custom_color = this.task.color;
       this.dialog_settings = true;
+      this.users_on_task = this.task.users;
     },
 
     close_settings() {
