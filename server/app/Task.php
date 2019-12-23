@@ -20,6 +20,7 @@ class Task extends Model
         $max = $c->tasks()->max('order');
         if ($max === null) $task->order = 0;
         else $task->order = $max + 1;
+        $task->color = 'grey';
         $c->tasks()->save($task);
         return $task;
     }
