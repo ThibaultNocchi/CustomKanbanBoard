@@ -208,7 +208,7 @@ export default new Vuex.Store({
     },
 
     edit_task(context, { task, color, users }) {
-      users.sort();
+      users.sort((a, b) => a - b);
       let users_changed = true;
       if (users.length === task.users.length) {
         for (let i = 0; i < users.length; ++i) {
