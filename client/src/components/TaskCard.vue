@@ -82,20 +82,6 @@
                 <v-form onSubmit="return false">
                   <v-row>
                     <v-col>
-                      <p class="subtitle-1 mb-0">Users :</p>
-                      <v-autocomplete
-                        :items="$store.getters.users_select"
-                        v-model="users_on_task"
-                        multiple
-                        chips
-                        clearable
-                        deletable-chips
-                      ></v-autocomplete>
-                    </v-col>
-                  </v-row>
-
-                  <v-row>
-                    <v-col>
                       <p class="subtitle-1 mb-0">Task color :</p>
                       <swatches
                         v-model="custom_color"
@@ -103,6 +89,22 @@
                         inline
                         show-border
                       />
+                    </v-col>
+                  </v-row>
+
+                  <v-divider></v-divider>
+
+                  <v-row>
+                    <v-col>
+                      <p class="subtitle-1 mb-0">Users :</p>
+                      <v-autocomplete
+                        :items="$store.getters.users_select"
+                        v-model="users_on_task"
+                        multiple
+                        chips
+                        deletable-chips
+                        dense
+                      ></v-autocomplete>
                     </v-col>
                   </v-row>
                 </v-form>
@@ -193,7 +195,7 @@
       <v-row v-else>
         <v-col
           cols="auto"
-          class="pb-0 pt-1"
+          class="pb-0 pt-1 pr-0"
           v-for="(name, idx) in user_names"
           :key="idx"
         >
