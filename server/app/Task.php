@@ -68,7 +68,7 @@ class Task extends Model
 
     public function getUsersAttribute()
     {
-        return $this->users()->get()->pluck('id');
+        return $this->users()->orderBy('user_id')->get()->pluck('id');
     }
 
     public function setColorAttribute(string $val)

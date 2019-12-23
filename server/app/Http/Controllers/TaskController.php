@@ -140,7 +140,6 @@ class TaskController extends Controller
                 }
                 $users = $request->users;
             }
-            sort($users);
             $task->users()->sync($users);
         }
 
