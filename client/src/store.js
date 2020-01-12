@@ -9,7 +9,7 @@ export default new Vuex.Store({
   state: {
     syncing: 0,
 
-    api: new api.API("http://super.kanban:8372/"),
+    api: new api.API("http://localhost:8081/"),
 
     board: null,
     users: [],
