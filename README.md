@@ -13,6 +13,7 @@ The easiest way to try it is with Docker and Docker Compose.
 You should go [here](https://docs.docker.com/compose/install/) and follow what they say to first install Docker and then Docker Compose if it didn't come with the first (like on Linux).
 
 Then clone this repo, go into the root and run `docker-compose up`. It should start and you can open [http://localhost:8080](http://localhost:8080) in your browser.
+
 For now, as it uses MariaDB and as (at least on my machine) it takes a lot of time to first boot, you may have to wait a minute or two before the server migrated the database and is up and running. Maybe we'll find a solution to this problem, or I'll switch to SQLite to also get the benefit of not using a whole MySQL server.
 
 ### By hand
