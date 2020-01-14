@@ -15,36 +15,25 @@ services:
                         - db
                 ports:
                         - "8082:8080"
-        composer:
-                image: composer
-                container_name: composer
-                command: composer install
-                volumes:
-                        - ./server:/app
         kanban_apache:
                 build: ./server
+                image: kanban_apache
                 container_name: kanban_apache
+                restart: always
                 volumes:
                         - ./server:/project
+                        - /project/vendor
                 ports:
                         - "8081:80"
                 depends_on:
-                        - composer
                         - db
-                        - kanban_apache_migrate
-        kanban_apache_migrate:
-                build: ./server
-                volumes:
-                        - ./server:/project
-                depends_on:
-                        - db
-                restart: on-failure
-                command: php artisan migrate
         kanban_vue:
                 build: ./client
+                image: kanban_vue
                 container_name: kanban_vue
                 volumes:
                         - ./client:/project
+                        - /project/node_modules
                 ports:
                         - "8080:8080"
                 logging:

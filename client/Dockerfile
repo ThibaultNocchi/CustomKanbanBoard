@@ -1,9 +1,9 @@
 FROM node:alpine
 
+RUN npm install -g @vue/cli
 WORKDIR /project
 
-RUN npm install -g @vue/cli
+COPY package*.json ./
+RUN npm install
 
-EXPOSE 8080
-
-CMD npm install && npm run serve
+CMD npm run serve
