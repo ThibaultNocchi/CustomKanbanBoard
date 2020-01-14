@@ -19,4 +19,4 @@ COPY database ./database
 COPY tests ./tests
 RUN composer install
 
-CMD php artisan migrate && apache2-foreground
+CMD cp .env.example .env && php artisan migrate && apache2-foreground
