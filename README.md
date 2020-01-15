@@ -16,6 +16,8 @@ Then clone this repo, go into the root and run `docker-compose up`. It should st
 
 For now, as it uses MariaDB and as (at least on my machine) it takes a lot of time to first boot, you may have to wait a minute or two before the server migrated the database and is up and running. Maybe we'll find a solution to this problem, or I'll switch to SQLite to also get the benefit of not using a whole MySQL server.
 
+To deploy to production, just run `docker-compose -f docker-compose.yml -f docker-compose.production.yml up`.
+
 ### By hand
 These instructions are mainly focused on a Linux machine, but the whole process consists in three steps and can be adapted on any setup:
 

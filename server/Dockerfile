@@ -1,4 +1,13 @@
-FROM php:apache
+FROM composer AS install
+
+WORKDIR /project
+COPY composer.* ./
+COPY database ./database
+COPY tests ./tests
+RUN composer install
+
+#
+FROM php:apache AS server
 
 WORKDIR /project
 
@@ -9,14 +18,25 @@ RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf
 RUN docker-php-ext-install pdo pdo_mysql
 RUN a2enmod rewrite
 
-COPY install_composer.sh ./
-RUN apt update && apt install -y wget git zip
-RUN chmod +x install_composer.sh
-RUN ./install_composer.sh
+COPY .env.example ./.env
+COPY --from=install /project/vendor ./vendor
 
-COPY composer.* ./
-COPY database ./database
-COPY tests ./tests
-RUN composer install
+CMD php artisan migrate && apache2-foreground
 
-CMD cp .env.example .env && php artisan migrate && apache2-foreground
+#
+FROM install AS install_prod
+
+WORKDIR /project
+RUN composer install --optimize-autoloader --no-dev
+
+#
+FROM server AS server_prod
+
+WORKDIR /project
+
+COPY . .
+RUN sed -i 's/APP_DEBUG=true/APP_DEBUG=false/g' .env
+COPY --from=install_prod /project/vendor ./vendor
+RUN php artisan key:generate
+
+CMD php artisan migrate && apache2-foreground

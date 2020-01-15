@@ -1,4 +1,4 @@
-version: "3"
+version: "3.4"
 services:
         db:
                 image: mariadb
@@ -10,13 +10,14 @@ services:
         adminer:
                 image: adminer
                 container_name: adminer
-                restart: always
                 depends_on:
                         - db
                 ports:
                         - "8082:8080"
         kanban_apache:
-                build: ./server
+                build:
+                        context: ./server
+                        target: server
                 image: kanban_apache
                 container_name: kanban_apache
                 restart: always
@@ -28,7 +29,9 @@ services:
                 depends_on:
                         - db
         kanban_vue:
-                build: ./client
+                build:
+                        context: ./client
+                        target: debug
                 image: kanban_vue
                 container_name: kanban_vue
                 volumes:
@@ -36,5 +39,3 @@ services:
                         - /project/node_modules
                 ports:
                         - "8080:8080"
-                logging:
-                        driver: none
