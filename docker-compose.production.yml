@@ -1,14 +1,5 @@
 version: "3.4"
 services:
-        db:
-                image: mariadb
-                container_name: db
-                restart: always
-                environment:
-                        MYSQL_ROOT_PASSWORD: "1234"
-                        MYSQL_DATABASE: "kanban"
-        adminer:
-                command: echo "No adminer in prod."
         kanban_apache:
                 build:
                         context: ./server
@@ -16,9 +7,8 @@ services:
                 image: kanban_apache_prod
                 container_name: kanban_apache
                 restart: always
-                depends_on:
-                        - db
                 volumes:
+                        - sqlite_db:/project/sqlite/
                         - /project
         kanban_vue:
                 build:
@@ -31,3 +21,5 @@ services:
                         - kanban_apache
                 ports:
                         - "80:80"
+volumes:
+        sqlite_db:

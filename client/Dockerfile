@@ -18,4 +18,5 @@ RUN npm run build
 #
 FROM nginx:alpine AS prod
 
+RUN cat /etc/nginx/conf.d/default.conf | sed '/index.html index.htm;/ a try_files $uri $uri/ /index.html;' > /etc/nginx/conf.d/default.conf
 COPY --from=build /project/dist /usr/share/nginx/html
