@@ -1,5 +1,7 @@
 version: "3.4"
 services:
+        sqlite3:
+                command: echo "No database viewer in prod."
         kanban_apache:
                 build:
                         context: ./server

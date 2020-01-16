@@ -1,5 +1,11 @@
 version: "3.4"
 services:
+        sqlite3:
+                image: sstc/sqlite3
+                container_name: sqlite3
+                volumes:
+                        - sqlite_db:/data
+                tty: true
         kanban_apache:
                 build:
                         context: ./server
